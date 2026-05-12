@@ -1,6 +1,7 @@
 export default function Home() {
-  const wa = "https://wa.me/62816660056?text=Assalamualaikum%20FS%20Comp%2C%20saya%20ingin%20konsultasi%20laptop%20second";
-  const katalog = "https://wa.me/c/62816692428";
+  const waNumber = "62816660056";
+  const wa = `https://wa.me/${waNumber}?text=Assalamualaikum%20FS%20Comp%2C%20saya%20ingin%20konsultasi%20laptop%20second`;
+  const katalog = `https://wa.me/c/${waNumber}`;
 
   const items = [
     ["Laptop Pelajar", "Hemat untuk sekolah, kuliah, Zoom, dan tugas harian."],
@@ -408,6 +409,19 @@ export default function Home() {
           gap:28px
         }
 
+        .floatwa{
+          position:fixed;
+          right:18px;
+          bottom:18px;
+          z-index:30;
+          background:#22c55e;
+          color:#fff;
+          border-radius:18px;
+          padding:14px 18px;
+          font-weight:900;
+          box-shadow:0 18px 45px rgba(34,197,94,.25)
+        }
+
         footer{
           border-top:1px solid rgba(148,163,184,.1);
           background:#000;
@@ -439,6 +453,7 @@ export default function Home() {
           .stats,.list{grid-template-columns:1fr}
           .btn{width:100%}
           .hero{padding-top:54px}
+          .floatwa{left:18px;text-align:center}
         }
       `}</style>
 
@@ -455,7 +470,7 @@ export default function Home() {
           <div className="links">
             <a href="#produk">Produk</a>
             <a href="#keunggulan">Keunggulan</a>
-            <a href="#servis">Servis</a>
+            <a href="#qc">QC</a>
             <a href="#lokasi">Lokasi</a>
           </div>
 
@@ -492,8 +507,129 @@ export default function Home() {
               Lihat Katalog WA
             </a>
           </div>
+
+          <div className="stats" id="keunggulan">
+            <div className="stat"><b>QC Ketat</b><span>Unit dicek sebelum dijual</span></div>
+            <div className="stat"><b>Garansi Toko</b><span>Belanja lebih tenang</span></div>
+            <div className="stat"><b>Servis Profesional</b><span>Teknisi berpengalaman</span></div>
+            <div className="stat"><b>Lokasi Jelas</b><span>FS Comp Wiradesa</span></div>
+          </div>
+        </div>
+
+        <div className="device">
+          <div className="deviceTop">
+            <div>
+              <small>FS Comp</small>
+              <h2>Ready Laptop Second</h2>
+            </div>
+            <div className="fs">FS</div>
+          </div>
+          <div className="visual">
+            <div className="screen">
+              <b>QC Passed</b>
+              <span>Laptop siap pakai</span>
+            </div>
+          </div>
+          <div className="chips">
+            <div className="chip">ThinkPad</div>
+            <div className="chip">Latitude</div>
+            <div className="chip">EliteBook</div>
+          </div>
         </div>
       </div>
+
+      <section id="produk">
+        <div className="wrap">
+          <div className="center">
+            <div className="eye">Produk & Layanan</div>
+            <h3>Solusi komputer untuk kebutuhan Anda</h3>
+            <p>
+              Mulai dari laptop second, rakit PC, aksesoris, sampai servis pendukung.
+            </p>
+          </div>
+
+          <div className="grid">
+            {items.map((item, index) => (
+              <div className="card" key={item[0]}>
+                <div className="ico">{index + 1}</div>
+                <h4>{item[0]}</h4>
+                <p>{item[1]}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="qc" className="band">
+        <div className="wrap split">
+          <div>
+            <div className="eye">QC FS Comp</div>
+            <h3>Setiap unit dicek sebelum dijual.</h3>
+            <p className="text">
+              Laptop second tidak boleh asal terlihat menyala. Kami cek bagian penting
+              agar pelanggan mendapat unit yang lebih layak, aman, dan siap dipakai.
+            </p>
+          </div>
+
+          <div className="list">
+            {[
+              "Fisik & engsel",
+              "Layar",
+              "Keyboard",
+              "Touchpad",
+              "Baterai",
+              "SSD/RAM",
+              "Port USB",
+              "Charger",
+              "WiFi",
+              "Performa"
+            ].map((item) => (
+              <div className="li" key={item}>✓ {item}</div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="cta">
+        <div className="wrap">
+          <h3>Butuh rekomendasi laptop yang cocok?</h3>
+          <p className="text">
+            Chat admin FS Comp. Sebutkan kebutuhan, budget, dan pemakaian Anda.
+            Kami bantu pilihkan unit yang paling sesuai.
+          </p>
+          <div className="actions" style={{justifyContent:"center"}}>
+            <a className="btn primary" href={wa}>Chat Admin FS Comp</a>
+            <a className="btn outline" href={katalog}>Lihat Katalog WA</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="lokasi">
+        <div className="wrap">
+          <div className="loc">
+            <div>
+              <div className="eye">Lokasi Toko</div>
+              <h3>FS Comp Wiradesa</h3>
+              <p className="text">
+                Jl. Wiradesa No.1 RT22/RW05, Wiradesa, Kab. Pekalongan.
+              </p>
+            </div>
+            <a className="btn primary" href={wa}>Hubungi via WhatsApp</a>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <div className="wrap foot">
+          <div>
+            <b>FS COMP</b>
+            <p>Laptop second, rakit PC, aksesoris, dan servis komputer.</p>
+          </div>
+          <div>WhatsApp: 0816660056</div>
+        </div>
+      </footer>
+
+      <a className="floatwa" href={wa}>Konsultasi Laptop</a>
     </main>
   )
 }
