@@ -2,6 +2,7 @@ export default function Home() {
   const waNumber = "62816660056";
   const wa = `https://wa.me/${waNumber}?text=Assalamualaikum%20FS%20Comp%2C%20saya%20mau%20konsultasi%20laptop`;
   const katalog = `https://wa.me/c/${waNumber}`;
+  const maps = "https://maps.app.goo.gl/L4nybXTssgsqwxbH7";
 
   const features = [
     ["QC Ketat", "Unit dicek sebelum dijual"],
@@ -70,7 +71,7 @@ export default function Home() {
         .qc-box h2{font-size:clamp(32px,5vw,52px);line-height:1.05;margin:0 0 18px;font-weight:950;letter-spacing:-1.5px}.qc-box p{color:#cbd5e1;line-height:1.75;font-size:17px}
         .qc-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.qc-item{border:1px solid rgba(34,211,238,.16);background:rgba(34,211,238,.06);border-radius:18px;padding:14px 16px;color:#e2e8f0;font-weight:800;font-size:14px}
         .cta{background:#22d3ee;color:#020617;border-radius:40px;padding:42px;display:flex;justify-content:space-between;gap:30px;align-items:center}.cta h2{font-size:clamp(30px,5vw,50px);line-height:1.05;margin:0;font-weight:950;letter-spacing:-1.5px}.cta p{color:#0f172a;line-height:1.6;max-width:660px}.cta .btn{background:#020617;color:white}
-        .footer{border-top:1px solid rgba(255,255,255,.1);padding:34px 22px;color:#cbd5e1}.footgrid{max-width:1180px;margin:auto;display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center}.footbrand{font-size:22px;font-weight:950;color:white}.loc{text-align:right;color:#cbd5e1;line-height:1.6}
+        .footer{border-top:1px solid rgba(255,255,255,.1);padding:34px 22px;color:#cbd5e1}.footgrid{max-width:1180px;margin:auto;display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center}.footbrand{font-size:22px;font-weight:950;color:white}.loc{text-align:right;color:#cbd5e1;line-height:1.6}.maps-link{color:#67e8f9;font-weight:900}.maps-link:hover{color:#22d3ee}.maps-btn{display:inline-flex;margin-top:10px;padding:10px 14px;border-radius:14px;background:rgba(34,211,238,.1);border:1px solid rgba(34,211,238,.25);color:#cffafe;font-weight:900}
         .float{position:fixed;right:20px;bottom:20px;z-index:50;background:#22c55e;color:#fff;border-radius:18px;padding:15px 19px;font-weight:900;box-shadow:0 20px 50px rgba(34,197,94,.28)}
         @media(max-width:900px){.nav{display:none}.hero{grid-template-columns:1fr;padding-top:34px}.trust-grid{grid-template-columns:1fr 1fr}.products{grid-template-columns:1fr 1fr}.qc-box{grid-template-columns:1fr}.cta{flex-direction:column;align-items:flex-start}.footgrid{grid-template-columns:1fr}.loc{text-align:left}}
         @media(max-width:560px){.header{padding:16px}.hero{padding-left:16px;padding-right:16px}.wrap{padding:0 16px}h1{font-size:44px}.lead{font-size:16px}.actions .btn{width:100%}.trust-grid,.products,.qc-list{grid-template-columns:1fr}.visual-card{border-radius:28px}.unit{right:18px;top:18px}.float{left:16px;right:16px;text-align:center;justify-content:center}.cta,.qc-box{padding:26px;border-radius:30px}}
@@ -141,7 +142,7 @@ export default function Home() {
       </section>
 
       <footer id="lokasi" className="footer">
-        <div className="footgrid"><div><div className="footbrand">FSCOMP</div><p>Laptop second, rakit PC, aksesoris, dan servis komputer.</p></div><div className="loc">FS Comp Wiradesa — Jl. Wiradesa No.1 RT22/RW05, Wiradesa, Kab. Pekalongan.<br/>WA: 0816660056</div></div>
+        <div className="footgrid"><div><div className="footbrand">FSCOMP</div><p>Laptop second, rakit PC, aksesoris, dan servis komputer.</p></div><div className="loc"><a className="maps-link" href={maps} target="_blank" rel="noopener noreferrer">📍 FS Comp Wiradesa</a><br/>Jl. Wiradesa No.1 RT22/RW05, Wiradesa, Kab. Pekalongan.<br/>WA: 0816660056<br/><a className="maps-btn" href={maps} target="_blank" rel="noopener noreferrer">Buka Google Maps →</a></div></div>
       </footer>
 
       <a className="float" href={wa}>Konsultasi Laptop</a>
