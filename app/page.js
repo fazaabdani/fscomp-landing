@@ -1,7 +1,7 @@
 export default function Home() {
   const waNumber = "62816660056";
   const wa = `https://wa.me/${waNumber}?text=Assalamualaikum%20FS%20Comp%2C%20saya%20mau%20konsultasi%20laptop`;
-  const katalog = `https://wa.me/c/${waNumber}`;
+  const katalog = "https://katalog.fscomp.id";
   const maps = "https://maps.app.goo.gl/L4nybXTssgsqwxbH7";
 
   const features = [
