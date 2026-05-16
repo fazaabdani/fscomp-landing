@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Katalog Laptop Second FS Comp</title>
+  <meta name="description" content="Katalog laptop second FS Comp. Data stok otomatis dari spreadsheet." />
+  <style>
+    :root {
+      --bg: #07111f;
+      --card: rgba(255,255,255,.08);
+      --card2: rgba(255,255,255,.12);
+      --text: #eef6ff;
+      --muted: #9db1c7;
+      --line: rgba(255,255,255,.12);
+      --accent: #37b7ff;
+      --shadow: 0 20px 60px rgba(0,0,0,.35);
+      --radius: 22px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(55,183,255,.22), transparent 35%),
+        radial-gradient(circle at top right, rgba(110,231,183,.12), transparent 30%),
+        var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+    a { color: inherit; text-decoration: none; }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 24px 16px 48px; }
+    .hero {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 18px;
+      align-items: stretch;
+      margin-bottom: 18px;
+    }
+    .hero-main, .hero-side, .toolbar, .card {
+      background: linear-gradient(180deg, var(--card2), var(--card));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+    .hero-main { padding: 28px; }
+    .hero-side { padding: 22px; display: flex; flex-direction: column; justify-content: space-between; gap: 12px; }
+    .badge {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(55,183,255,.35);
+      background: rgba(55,183,255,.12);
+      color: #bdeeff;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      margin-bottom: 14px;
+    }
+    h1 { margin: 0 0 10px; font-size: clamp(30px, 5vw, 58px); line-height: 1.02; letter-spacing: -.04em; }
+    .lead { color: var(--muted); font-size: 17px; line-height: 1.6; max-width: 720px; margin: 0; }
+    .hero-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 12px 15px; border-radius: 14px; border: 1px solid var(--line);
+      background: rgba(255,255,255,.08); font-weight: 800; cursor: pointer;
+      transition: transform .18s ease, background .18s ease;
+      text-align: center;
+    }
+    .btn:hover { transform: translateY(-1px); background: rgba(255,255,255,.13); }
+    .btn.primary { background: linear-gradient(135deg, var(--accent), #1677ff); border-color: transparent; color: white; }
+    .btn.green { background: linear-gradient(135deg, #22c55e, #16a34a); border-color: transparent; color: white; }
+    .stats { display:grid; grid-template-columns: repeat(2,1fr); gap:10px; }
+    .stat { padding: 14px; border-radius: 16px; background: rgba(255,255,255,.07); border:1px solid var(--line); }
+    .stat b { font-size: 25px; display:block; }
+    .stat span { color: var(--muted); font-size: 13px; }
+    .toolbar {
+      padding: 14px;
+      display: grid;
+      grid-template-columns: 1.4fr .8fr .8fr .8fr .8fr;
+      gap: 10px;
+      margin-bottom: 16px;
+      position: sticky;
+      top: 10px;
+      z-index: 20;
+    }
+    input, select {
+      width: 100%; padding: 13px 14px; border-radius: 14px; border:1px solid var(--line);
+      background: rgba(5,12,22,.72); color: var(--text); outline: none;
+    }
+    input::placeholder { color: #7890a8; }
+    .grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .card { overflow: hidden; display:flex; flex-direction:column; min-height:100%; }
+    .image {
+      height: 145px;
+      background:
+        linear-gradient(135deg, rgba(55,183,255,.18), rgba(110,231,183,.10)),
+        rgba(255,255,255,.05);
+      display:flex; align-items:center; justify-content:center;
+      border-bottom: 1px solid var(--line);
+      position: relative;
+      padding: 16px;
+      text-align: center;
+    }
+    .image-title { font-size: 18px; font-weight: 950; line-height: 1.25; max-width: 92%; }
+    .pill {
+      position:absolute; top:12px; left:12px; border-radius:999px; padding:7px 10px; font-size:12px; font-weight:900;
+      background: rgba(0,0,0,.55); border:1px solid rgba(255,255,255,.2);
+    }
+    .pill.ready { color:#b8ffd0; }
+    .pill.sold { color:#ffc4c4; }
+    .pill.temp { color:#ffe0a3; }
+    .body { padding: 16px; display:flex; flex-direction:column; gap: 12px; flex:1; }
+    .title { font-size: 18px; font-weight: 950; line-height:1.28; }
+    .price { font-size: 23px; font-weight: 950; color: #e9fbff; }
+    .specs { display:grid; grid-template-columns: repeat(2,1fr); gap:8px; }
+    .spec { padding:10px; border-radius:13px; background: rgba(255,255,255,.06); border:1px solid var(--line); min-height:58px; }
+    .spec small { color: var(--muted); display:block; margin-bottom: 3px; }
+    .spec b { font-size: 13px; }
+    .meta { display:flex; gap:7px; flex-wrap:wrap; color: var(--muted); font-size: 13px; }
+    .meta span { border:1px solid var(--line); border-radius:999px; padding:6px 9px; background: rgba(255,255,255,.04); }
+    .actions { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:auto; }
+    .empty, .loading, .error {
+      border: 1px dashed var(--line); border-radius: var(--radius); padding: 28px; text-align:center; color: var(--muted);
+      background: rgba(255,255,255,.04);
+    }
+    .footer { margin-top: 26px; color: var(--muted); text-align:center; font-size: 13px; line-height:1.6; }
+    @media (max-width: 980px) {
+      .hero, .grid { grid-template-columns: 1fr; }
+      .toolbar { grid-template-columns: 1fr; position: static; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="hero">
+      <div class="hero-main">
+        <div class="badge">⚡ Data otomatis dari Spreadsheet FS Comp</div>
+        <h1>Katalog Laptop Second FS Comp</h1>
+        <p class="lead">Cari laptop ready sesuai kebutuhan panjenengan. Stok laptop second cepat berubah, jadi tetap konfirmasi dulu ke admin sebelum booking.</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#katalog">Lihat Katalog</a>
+          <a class="btn green" id="waTop" target="_blank" rel="noopener">Chat Admin</a>
+        </div>
+      </div>
+      <aside class="hero-side">
+        <div class="stats">
+          <div class="stat"><b id="totalCount">0</b><span>Total unit tampil</span></div>
+          <div class="stat"><b id="readyCount">0</b><span>Ready stock</span></div>
+        </div>
+        <p class="lead" style="font-size:14px">Harga dan stok mengikuti update spreadsheet. Klik detail unit untuk melihat link katalog/foto bila tersedia.</p>
+      </aside>
+    </section>
+
+    <section class="toolbar" id="katalog">
+      <input id="search" placeholder="Cari ThinkPad, Dell, i5 gen 8, RAM 16GB..." />
+      <select id="brandFilter"><option value="">Semua merek</option></select>
+      <select id="locationFilter"><option value="">Semua lokasi</option></select>
+      <select id="availabilityFilter">
+        <option value="ready">Ready saja</option>
+        <option value="">Semua status</option>
+        <option value="sold">Terjual / tidak ready</option>
+      </select>
+      <select id="sort">
+        <option value="default">Urutan spreadsheet</option>
+        <option value="priceAsc">Harga termurah</option>
+        <option value="priceDesc">Harga tertinggi</option>
+      </select>
+    </section>
+
+    <div id="status" class="loading">Memuat data katalog...</div>
+    <section class="grid" id="grid"></section>
+
+    <p class="footer">
+      FS Comp Wiradesa • WhatsApp Admin: <span id="waNumberText"></span><br>
+      Data katalog bersumber dari Google Spreadsheet stok FS Comp.
+    </p>
+  </main>
+
+  <script>
+    const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/1fAcFER0FqV8S94vJhglkY3Rg4EYU7c9_Sn5QEsvNPWc/gviz/tq?tqx=out:csv&sheet=LIST%20STOK%20LAPTOP%20SECOND";
+    const WA_NUMBER = "62816660056";
+    const STORE_NAME = "FS Comp Wiradesa";
+
+    const el = (id) => document.getElementById(id);
+    const grid = el("grid");
+    const statusBox = el("status");
+
+    el("waTop").href = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent("Assalamu'alaikum, mau tanya stok laptop ready di " + STORE_NAME + " 🙏😊")}`;
+    el("waNumberText").textContent = WA_NUMBER.replace(/^62/, "0");
+
+    let allItems = [];
+
+    function normalizeKey(key) {
+      return String(key || "").trim().toUpperCase().replace(/\s+/g, "_");
+    }
+
+    function pick(row, keys) {
+      for (const key of keys) {
+        const val = row[normalizeKey(key)];
+        if (val !== undefined && String(val).trim() !== "") return String(val).trim();
+      }
+      return "";
+    }
+
+    function parseCSV(text) {
+      const rows = [];
+      let cur = "", row = [], inQuotes = false;
+      for (let i = 0; i < text.length; i++) {
+        const c = text[i], n = text[i+1];
+        if (c === '"' && inQuotes && n === '"') { cur += '"'; i++; }
+        else if (c === '"') inQuotes = !inQuotes;
+        else if (c === "," && !inQuotes) { row.push(cur); cur = ""; }
+        else if ((c === "\n" || c === "\r") && !inQuotes) {
+          if (c === "\r" && n === "\n") i++;
+          row.push(cur); cur = "";
+          if (row.some(v => String(v).trim() !== "")) rows.push(row);
+          row = [];
+        } else cur += c;
+      }
+      row.push(cur);
+      if (row.some(v => String(v).trim() !== "")) rows.push(row);
+      return rows;
+    }
+
+    function currencyToNumber(value) {
+      const n = String(value || "").replace(/[^\d]/g, "");
+      return n ? Number(n) : 0;
+    }
+
+    function formatPrice(value) {
+      const n = currencyToNumber(value);
+      if (!n) return value || "Hubungi admin";
+      return new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", maximumFractionDigits: 0 }).format(n);
+    }
+
+    function deriveBrand(seri) {
+      const first = String(seri || "").trim().split(/\s+/)[0] || "";
+      const known = ["LENOVO", "DELL", "HP", "ASUS", "ACER", "AXIOO", "APPLE", "MSI", "ZYREX", "TOSHIBA", "SAMSUNG"];
+      const upper = first.toUpperCase();
+      return known.includes(upper) ? upper : first;
+    }
+
+    function statusKind(status) {
+      const s = String(status || "").toLowerCase();
+      if (s.includes("tersedia") && !s.includes("tidak")) return "ready";
+      if (s.includes("terjual") || s.includes("habis")) return "sold";
+      if (s.includes("tidak") || s.includes("sementara")) return "temp";
+      return "temp";
+    }
+
+    function mapRow(raw, index) {
+      const row = {};
+      Object.keys(raw).forEach(k => row[normalizeKey(k)] = raw[k]);
+
+      const seri = pick(row, ["SERI", "TIPE", "TYPE", "MODEL"]);
+      const brand = pick(row, ["MEREK", "BRAND"]) || deriveBrand(seri);
+      const processor = pick(row, ["PROCESSOR", "PROSESOR", "CPU"]);
+      const ram = pick(row, ["RAM", "MEMORY"]);
+      const storage = pick(row, ["STORAGE", "SSD", "PENYIMPANAN", "HDD"]);
+      const screen = pick(row, ["DISPLAY", "LAYAR", "SCREEN", "LCD"]);
+      const price = pick(row, ["HARGA", "PRICE"]);
+      const stock = pick(row, ["STOK", "QTY", "JUMLAH"]);
+      const status = pick(row, ["STATUS", "KETERSEDIAAN"]);
+      const feature = pick(row, ["FITUR_TAMBAHAN", "FITUR", "BONUS", "KETERANGAN"]);
+      const location = pick(row, ["LOKASI_STOK", "LOKASI", "LOCATION", "TOKO"]);
+      const minus = pick(row, ["MINUS"]);
+
+      // Link katalog tetap dibaca, tapi label "KATALOG WA" / "Facebook" tidak ditampilkan ke pelanggan.
+      // Kalau ada beberapa sumber link, prioritas: LINK_KATALOG / LINK / KATALOG WA.
+      const catalogLink = pick(row, ["LINK_KATALOG", "LINK", "URL", "KATALOG_WA", "KATALOG"]);
+
+      const kind = statusKind(status);
+
+      return {
+        no: index + 1,
+        seri, brand, processor, ram, storage, screen, price, stock, status, feature, location, minus, catalogLink, kind,
+        searchText: [seri, brand, processor, ram, storage, screen, price, stock, status, feature, location, minus].join(" ").toLowerCase(),
+        priceNumber: currencyToNumber(price)
+      };
+    }
+
+    function title(item) {
+      return item.seri || "Laptop FS Comp";
+    }
+
+    function waLink(item) {
+      const msg = [
+        "Assalamu'alaikum, min.",
+        `Saya mau tanya unit ${title(item)}.`,
+        item.processor ? `Processor: ${item.processor}` : "",
+        item.ram ? `RAM: ${item.ram}` : "",
+        item.storage ? `Storage: ${item.storage}` : "",
+        item.screen ? `Layar: ${item.screen}` : "",
+        item.price ? `Harga: ${formatPrice(item.price)}` : "",
+        item.location ? `Lokasi stok: ${item.location}` : "",
+        "",
+        "Apakah masih ready? 🙏😊"
+      ].filter(Boolean).join("\n");
+      return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
+    }
+
+    function escapeHtml(str) {
+      return String(str || "").replace(/[&<>"']/g, m => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#039;" }[m]));
+    }
+
+    function renderFilters(items) {
+      const brands = [...new Set(items.map(i => i.brand).filter(Boolean))].sort();
+      const locations = [...new Set(items.map(i => i.location).filter(Boolean))].sort();
+
+      el("brandFilter").innerHTML = `<option value="">Semua merek</option>` + brands.map(b => `<option value="${escapeHtml(b)}">${escapeHtml(b)}</option>`).join("");
+      el("locationFilter").innerHTML = `<option value="">Semua lokasi</option>` + locations.map(l => `<option value="${escapeHtml(l)}">${escapeHtml(l)}</option>`).join("");
+    }
+
+    function render() {
+      const q = el("search").value.trim().toLowerCase();
+      const brand = el("brandFilter").value;
+      const location = el("locationFilter").value;
+      const availability = el("availabilityFilter").value;
+      const sort = el("sort").value;
+
+      let items = allItems.filter(item => {
+        const matchesQ = !q || item.searchText.includes(q);
+        const matchesBrand = !brand || item.brand === brand;
+        const matchesLocation = !location || item.location === location;
+        const matchesAvailability =
+          !availability ||
+          (availability === "ready" && item.kind === "ready") ||
+          (availability === "sold" && item.kind !== "ready");
+        return matchesQ && matchesBrand && matchesLocation && matchesAvailability;
+      });
+
+      if (sort === "priceAsc") items.sort((a,b) => (a.priceNumber || 999999999) - (b.priceNumber || 999999999));
+      if (sort === "priceDesc") items.sort((a,b) => b.priceNumber - a.priceNumber);
+
+      el("totalCount").textContent = items.length;
+      el("readyCount").textContent = allItems.filter(i => i.kind === "ready").length;
+
+      if (!items.length) {
+        grid.innerHTML = "";
+        statusBox.style.display = "block";
+        statusBox.className = "empty";
+        statusBox.textContent = "Belum ada unit yang cocok dengan pencarian.";
+        return;
+      }
+
+      statusBox.style.display = "none";
+      grid.innerHTML = items.map(cardHtml).join("");
+    }
+
+    function isValidLink(link) {
+      return link && /^https?:\/\//i.test(link) && !/tidak tersedia/i.test(link);
+    }
+
+    function cardHtml(item) {
+      const pillClass = item.kind === "ready" ? "ready" : item.kind === "sold" ? "sold" : "temp";
+      const detailBtn = isValidLink(item.catalogLink)
+        ? `<a class="btn" href="${escapeHtml(item.catalogLink)}" target="_blank" rel="noopener">Lihat Detail</a>`
+        : `<a class="btn" href="${waLink(item)}" target="_blank" rel="noopener">Minta Foto</a>`;
+
+      return `
+        <article class="card">
+          <div class="image">
+            <span class="pill ${pillClass}">${escapeHtml(item.status || "Cek stok")}</span>
+            <div class="image-title">${escapeHtml(title(item))}</div>
+          </div>
+          <div class="body">
+            <div>
+              <div class="title">${escapeHtml(title(item))}</div>
+              <div class="price">${escapeHtml(formatPrice(item.price))}</div>
+            </div>
+            <div class="specs">
+              <div class="spec"><small>Processor</small><b>${escapeHtml(item.processor || "-")}</b></div>
+              <div class="spec"><small>RAM</small><b>${escapeHtml(item.ram || "-")}</b></div>
+              <div class="spec"><small>Storage</small><b>${escapeHtml(item.storage || "-")}</b></div>
+              <div class="spec"><small>Display</small><b>${escapeHtml(item.screen || "-")}</b></div>
+            </div>
+            <div class="meta">
+              ${item.stock ? `<span>Stok: ${escapeHtml(item.stock)}</span>` : ""}
+              ${item.location ? `<span>📍 ${escapeHtml(item.location)}</span>` : ""}
+              ${item.feature ? `<span>${escapeHtml(item.feature)}</span>` : ""}
+              ${item.minus ? `<span>Minus: ${escapeHtml(item.minus)}</span>` : ""}
+            </div>
+            <div class="actions">
+              <a class="btn green" href="${waLink(item)}" target="_blank" rel="noopener">Chat Admin</a>
+              ${detailBtn}
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    async function load() {
+      try {
+        const res = await fetch(SHEET_CSV_URL, { cache: "no-store" });
+        if (!res.ok) throw new Error("Gagal mengambil CSV spreadsheet.");
+        const text = await res.text();
+        const rows = parseCSV(text);
+
+        const headerIndex = rows.findIndex(r =>
+          r.map(x => normalizeKey(x)).includes("SERI") &&
+          r.map(x => normalizeKey(x)).includes("PROCESSOR")
+        );
+
+        if (headerIndex === -1) {
+          throw new Error("Header SERI dan PROCESSOR tidak ditemukan. Cek nama tab atau struktur sheet.");
+        }
+
+        const headers = rows[headerIndex].map(h => normalizeKey(h));
+        const dataRows = rows.slice(headerIndex + 1);
+
+        const objects = dataRows.map(cols => {
+          const obj = {};
+          headers.forEach((h, i) => obj[h] = cols[i] || "");
+          return obj;
+        });
+
+        allItems = objects
+          .map(mapRow)
+          .filter(i => i.seri || i.processor || i.price)
+          .filter(i => !/^quotes are not sourced/i.test(i.seri));
+
+        renderFilters(allItems);
+        render();
+      } catch (err) {
+        console.error(err);
+        statusBox.className = "error";
+        statusBox.innerHTML = `Katalog belum bisa dimuat.<br><br><b>Penyebab:</b> ${escapeHtml(err.message)}<br><br>Pastikan spreadsheet bisa diakses publik dan tab <b>LIST STOK LAPTOP SECOND</b> masih ada.`;
+      }
+    }
+
+    ["search", "brandFilter", "locationFilter", "availabilityFilter", "sort"].forEach(id => el(id).addEventListener("input", render));
+    load();
+  </script>
+</body>
+</html>
