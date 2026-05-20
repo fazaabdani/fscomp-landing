@@ -27,20 +27,20 @@ export default function Home() {
         html{scroll-behavior:smooth}
         body{margin:0;background:#030712;color:#fff;font-family:Arial,Helvetica,sans-serif}
         a{text-decoration:none;color:inherit}
-        .page{min-height:100vh;position:relative;overflow:hidden;background:radial-gradient(circle at 70% 20%,rgba(14,165,233,.28),transparent 38%),radial-gradient(circle at 20% 75%,rgba(37,99,235,.18),transparent 35%),linear-gradient(to bottom,rgba(3,7,18,.1),#030712 85%),#030712}
+        .page{min-height:100vh;position:relative;overflow-x:hidden;background:radial-gradient(circle at 70% 20%,rgba(14,165,233,.28),transparent 38%),radial-gradient(circle at 20% 75%,rgba(37,99,235,.18),transparent 35%),linear-gradient(to bottom,rgba(3,7,18,.1),#030712 85%),#030712}
         .wrap{max-width:1180px;margin:0 auto;padding:0 22px;position:relative;z-index:2}
-        .header{display:flex;align-items:center;justify-content:space-between;padding:22px 22px;max-width:1180px;margin:0 auto;position:relative;z-index:5}
+        .header{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:16px 22px;max-width:1180px;margin:0 auto;position:sticky;top:0;z-index:60;background:rgba(3,7,18,.82);border:1px solid rgba(255,255,255,.08);border-top:0;border-radius:0 0 28px 28px;backdrop-filter:blur(18px);box-shadow:0 18px 55px rgba(0,0,0,.22)}
         .brand{display:flex;align-items:center;gap:12px}
         .logo{width:44px;height:44px;border-radius:16px;background:linear-gradient(135deg,#3b82f6,#22d3ee);display:grid;place-items:center;color:#020617;font-weight:900;box-shadow:0 20px 45px rgba(34,211,238,.18)}
         .brand-title{font-size:18px;font-weight:900;letter-spacing:-.3px}
         .brand-sub{font-size:12px;color:#94a3b8;margin-top:2px}
-        .nav{display:flex;gap:30px;color:#cbd5e1;font-size:14px}
+        .nav{display:flex;gap:26px;color:#cbd5e1;font-size:14px;align-items:center}
         .nav a:hover{color:#67e8f9}
         .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:16px;padding:15px 22px;font-weight:900;transition:.2s;border:1px solid transparent}
         .btn:hover{transform:translateY(-2px)}
         .btn-primary{background:#22d3ee;color:#020617;box-shadow:0 18px 45px rgba(34,211,238,.22)}
         .btn-outline{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.14);color:#e2e8f0}
-        .btn-wa{border:1px solid rgba(34,211,238,.4);color:#cffafe;padding:11px 16px;border-radius:14px;background:rgba(34,211,238,.06);font-weight:800}
+        .btn-wa{border:1px solid rgba(34,211,238,.4);color:#cffafe;padding:11px 16px;border-radius:14px;background:rgba(34,211,238,.06);font-weight:800;white-space:nowrap}
         .hero{display:grid;grid-template-columns:1.05fr .95fr;gap:54px;align-items:center;padding:58px 22px 58px;max-width:1180px;margin:0 auto;position:relative;z-index:2}
         .badge{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(34,211,238,.22);background:rgba(34,211,238,.1);color:#cffafe;border-radius:999px;padding:10px 15px;font-size:14px;margin-bottom:24px}
         h1{font-size:clamp(42px,6.6vw,76px);line-height:.96;letter-spacing:-2.8px;margin:0;font-weight:950}
@@ -73,8 +73,8 @@ export default function Home() {
         .cta{background:#22d3ee;color:#020617;border-radius:40px;padding:42px;display:flex;justify-content:space-between;gap:30px;align-items:center}.cta h2{font-size:clamp(30px,5vw,50px);line-height:1.05;margin:0;font-weight:950;letter-spacing:-1.5px}.cta p{color:#0f172a;line-height:1.6;max-width:660px}.cta .btn{background:#020617;color:white}
         .footer{border-top:1px solid rgba(255,255,255,.1);padding:34px 22px;color:#cbd5e1}.footgrid{max-width:1180px;margin:auto;display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center}.footbrand{font-size:22px;font-weight:950;color:white}.loc{text-align:right;color:#cbd5e1;line-height:1.6}.maps-link{color:#67e8f9;font-weight:900}.maps-link:hover{color:#22d3ee}.maps-btn{display:inline-flex;margin-top:10px;padding:10px 14px;border-radius:14px;background:rgba(34,211,238,.1);border:1px solid rgba(34,211,238,.25);color:#cffafe;font-weight:900}
         .float{position:fixed;right:20px;bottom:20px;z-index:50;background:#22c55e;color:#fff;border-radius:18px;padding:15px 19px;font-weight:900;box-shadow:0 20px 50px rgba(34,197,94,.28)}
-        @media(max-width:900px){.nav{display:none}.hero{grid-template-columns:1fr;padding-top:34px}.trust-grid{grid-template-columns:1fr 1fr}.products{grid-template-columns:1fr 1fr}.qc-box{grid-template-columns:1fr}.cta{flex-direction:column;align-items:flex-start}.footgrid{grid-template-columns:1fr}.loc{text-align:left}}
-        @media(max-width:560px){.header{padding:16px}.hero{padding-left:16px;padding-right:16px}.wrap{padding:0 16px}h1{font-size:44px}.lead{font-size:16px}.actions .btn{width:100%}.trust-grid,.products,.qc-list{grid-template-columns:1fr}.visual-card{border-radius:28px}.unit{right:18px;top:18px}.float{left:16px;right:16px;text-align:center;justify-content:center}.cta,.qc-box{padding:26px;border-radius:30px}}
+        @media(max-width:900px){.nav{display:none}.header{max-width:none;margin:0;border-radius:0}.hero{grid-template-columns:1fr;padding-top:34px}.trust-grid{grid-template-columns:1fr 1fr}.products{grid-template-columns:1fr 1fr}.qc-box{grid-template-columns:1fr}.cta{flex-direction:column;align-items:flex-start}.footgrid{grid-template-columns:1fr}.loc{text-align:left}}
+        @media(max-width:560px){.header{padding:14px 16px}.hero{padding-left:16px;padding-right:16px}.wrap{padding:0 16px}h1{font-size:44px}.lead{font-size:16px}.actions .btn{width:100%}.trust-grid,.products,.qc-list{grid-template-columns:1fr}.visual-card{border-radius:28px}.unit{right:18px;top:18px}.float{left:16px;right:16px;text-align:center;justify-content:center}.cta,.qc-box{padding:26px;border-radius:30px}.brand-sub{display:none}.btn-wa{padding:10px 12px}}
       `}</style>
 
       <header className="header">
@@ -87,6 +87,7 @@ export default function Home() {
         </div>
         <nav className="nav">
           <a href="#produk">Produk</a>
+          <a href={katalog} target="_blank" rel="noopener noreferrer">Katalog</a>
           <a href="#keunggulan">Keunggulan</a>
           <a href="#qc">QC</a>
           <a href="#lokasi">Lokasi</a>
@@ -101,7 +102,7 @@ export default function Home() {
           <p className="lead">FS Comp menyediakan laptop second pilihan dengan QC ketat, rakit PC custom, aksesoris komputer, dan servis pendukung untuk kebutuhan kerja, sekolah, kuliah, dan bisnis.</p>
           <div className="actions">
             <a className="btn btn-primary" href={wa}>Konsultasi Sekarang</a>
-            <a className="btn btn-outline" href={katalog}>Lihat Katalog →</a>
+            <a className="btn btn-outline" href={katalog} target="_blank" rel="noopener noreferrer">Lihat Katalog →</a>
           </div>
         </div>
         <div className="visual-wrap">
