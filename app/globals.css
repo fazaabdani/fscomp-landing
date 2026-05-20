@@ -16,3 +16,29 @@ body {
 a {
   text-decoration: none;
 }
+
+.header {
+  position: fixed !important;
+  top: 0 !important;
+  left: 50% !important;
+  right: auto !important;
+  width: calc(100% - 44px) !important;
+  transform: translateX(-50%) !important;
+  z-index: 9999 !important;
+}
+
+.hero {
+  padding-top: 132px !important;
+}
+
+@media (max-width: 900px) {
+  .header {
+    left: 0 !important;
+    width: 100% !important;
+    transform: none !important;
+  }
+
+  .hero {
+    padding-top: 112px !important;
+  }
+}
