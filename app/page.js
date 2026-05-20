@@ -3,7 +3,7 @@ import { ShieldCheck, BadgeCheck, Wrench, Truck, MapPin, MessageCircle, Monitor,
 export default function Home() {
   const waNumber = "62816660056";
   const wa = `https://wa.me/${waNumber}?text=Assalamualaikum%20FS%20Comp%2C%20saya%20mau%20konsultasi%20laptop`;
-  const katalog = `https://wa.me/c/${waNumber}`;
+  const katalog = "https://katalog.fscomp.id";
 
   const features = [
     { icon: ShieldCheck, title: "QC Ketat", desc: "Unit dicek sebelum dijual" },
@@ -22,11 +22,11 @@ export default function Home() {
   const qcItems = ["Fisik & engsel", "Layar", "Keyboard", "Touchpad", "Baterai", "SSD/RAM", "Port USB", "Charger", "WiFi", "Performa"];
 
   return (
-    <main className="min-h-screen bg-[#030712] text-white overflow-hidden relative">
+    <main className="min-h-screen bg-[#030712] text-white overflow-x-hidden relative">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(14,165,233,0.28),transparent_38%),radial-gradient(circle_at_20%_75%,rgba(37,99,235,0.18),transparent_35%)]" />
       <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(3,7,18,0.1),#030712_85%)]" />
 
-      <header className="relative z-10 max-w-7xl mx-auto px-5 md:px-8 py-5 flex items-center justify-between">
+      <header className="sticky top-0 z-50 mx-auto flex max-w-7xl items-center justify-between gap-4 border-b border-white/10 bg-[#030712]/85 px-5 py-4 backdrop-blur-xl md:px-8">
         <div className="flex items-center gap-3">
           <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center font-bold shadow-lg shadow-cyan-500/20 text-slate-950">FS</div>
           <div>
@@ -36,6 +36,7 @@ export default function Home() {
         </div>
         <nav className="hidden md:flex items-center gap-8 text-sm text-slate-300">
           <a href="#produk" className="hover:text-cyan-300">Produk</a>
+          <a href={katalog} target="_blank" rel="noopener noreferrer" className="hover:text-cyan-300">Katalog</a>
           <a href="#keunggulan" className="hover:text-cyan-300">Keunggulan</a>
           <a href="#qc" className="hover:text-cyan-300">QC</a>
           <a href="#lokasi" className="hover:text-cyan-300">Lokasi</a>
@@ -60,7 +61,7 @@ export default function Home() {
             <a href={wa} className="inline-flex items-center justify-center gap-2 rounded-2xl bg-cyan-400 text-slate-950 font-bold px-6 py-4 shadow-xl shadow-cyan-500/20 hover:bg-cyan-300 transition">
               Konsultasi Sekarang <MessageCircle size={18} />
             </a>
-            <a href={katalog} className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/15 bg-white/5 px-6 py-4 font-semibold text-slate-100 hover:bg-white/10 transition">
+            <a href={katalog} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/15 bg-white/5 px-6 py-4 font-semibold text-slate-100 hover:bg-white/10 transition">
               Lihat Katalog <ArrowRight size={18} />
             </a>
           </div>
