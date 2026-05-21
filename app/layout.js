@@ -8,8 +8,8 @@ const localBusinessSchema = {
   name: 'FS Comp',
   alternateName: 'FSCOMP',
   url: siteUrl,
-  logo: `${siteUrl}/icon.svg`,
-  image: `${siteUrl}/icon.svg`,
+  logo: `${siteUrl}/favicon.svg`,
+  image: `${siteUrl}/favicon.svg`,
   description:
     'FS Comp adalah pusat laptop second berkualitas, rakit PC, aksesoris komputer, dan servis laptop/PC di Wiradesa, Pekalongan.',
   telephone: '+62816660056',
@@ -78,6 +78,14 @@ export const metadata = {
     siteName: 'FS Comp',
     locale: 'id_ID',
     type: 'website',
+    images: [
+      {
+        url: '/favicon.svg',
+        width: 96,
+        height: 96,
+        alt: 'Logo FS Comp',
+      },
+    ],
   },
   twitter: {
     card: 'summary',
@@ -96,10 +104,14 @@ export const metadata = {
       'max-video-preview': -1,
     },
   },
+  manifest: '/site.webmanifest',
   icons: {
-    icon: '/icon.svg',
-    shortcut: '/icon.svg',
-    apple: '/icon.svg',
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml', sizes: '96x96' },
+      { url: '/icon.svg', type: 'image/svg+xml' },
+    ],
+    shortcut: '/favicon.svg',
+    apple: '/favicon.svg',
   },
 };
 
