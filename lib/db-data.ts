@@ -1,5 +1,5 @@
 import type { Prisma } from "@prisma/client";
-import { batches as demoBatches, dailyQcs as demoDailyQcs, units as demoUnits, type BatchPSI } from "./api";
+import { aiLogs as demoAiLogs, batches as demoBatches, dailyQcs as demoDailyQcs, units as demoUnits, type BatchPSI } from "./api";
 import { prisma } from "./prisma";
 
 const paymentStatusLabel: Record<string, BatchPSI["statusPembayaran"]> = {
@@ -620,18 +620,55 @@ export async function getDashboardData() {
       catalogReadyUnits
     };
   } catch {
+    const problemUnits = demoUnits
+      .filter((unit) => unit.statusObservasi === "RECHECK" || unit.statusObservasi === "CANDIDATE RETUR")
+      .slice(0, 6)
+      .map((unit) => ({
+        id: unit.id,
+        nomorUnit: unit.nomorUnit,
+        model: unit.model,
+        processor: unit.processor,
+        ram: unit.ram,
+        ssd: unit.ssd,
+        statusObservasi: unit.statusObservasi
+      }));
+    const catalogReadyUnits = demoUnits
+      .filter((unit) => unit.statusObservasi === "VERIFIED" || unit.statusObservasi === "VERIFIED WITH NOTES")
+      .slice(0, 8)
+      .map((unit) => ({
+        id: unit.id,
+        nomorUnit: unit.nomorUnit,
+        model: unit.model,
+        processor: unit.processor,
+        ram: unit.ram,
+        ssd: unit.ssd,
+        hargaJualRekomendasi: unit.hargaJualRekomendasi
+      }));
+
     return {
       connected: false,
       stats: {
-        unitAktif: 0,
-        siapKatalog: 0,
-        perluPerhatian: 0,
-        qcHarian: 0
+        unitAktif: demoUnits.length,
+        siapKatalog: catalogReadyUnits.length,
+        perluPerhatian: problemUnits.length,
+        qcHarian: demoDailyQcs.length
       },
-      problemUnits: [],
-      aiLogs: [],
-      batches: [],
-      catalogReadyUnits: []
+      problemUnits,
+      aiLogs: demoAiLogs.slice(0, 5).map((log) => ({
+        id: log.id,
+        unitNomor: demoUnits.find((unit) => unit.id === log.unitId)?.nomorUnit ?? "-",
+        rekomendasi: log.rekomendasi
+      })),
+      batches: demoBatches.map((batch) => ({
+        id: batch.id,
+        nomorBatch: batch.nomorBatch,
+        supplier: batch.supplier,
+        tanggalTempo: batch.tanggalTempo,
+        statusPembayaran: batch.statusPembayaran,
+        catatan: batch.catatan,
+        jumlahUnit: demoUnits.filter((unit) => unit.batchId === batch.id).length
+      })),
+      catalogReadyUnits
     };
   }
 }
