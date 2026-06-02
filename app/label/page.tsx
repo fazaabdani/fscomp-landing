@@ -25,7 +25,7 @@ export default async function LabelPage({ searchParams }: { searchParams?: { uni
   qcItemMap.set("SSD", healthValue(selectedWithHealth.ssdHealth ?? qcItemMap.get("SSD")));
   qcItemMap.set("Battery", healthValue(selectedWithHealth.batteryHealth ?? qcItemMap.get("Battery")));
   qcItemMap.delete("Office");
-  const qcItems = [...qcItemMap.entries()];
+  const qcItems = Array.from(qcItemMap.entries());
 
   return (
     <section className="pageStack">
