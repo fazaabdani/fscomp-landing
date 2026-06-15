@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 
 function isPublicPath(pathname: string) {
+  if (pathname === "/") return true;
   if (pathname === "/login") return true;
   if (pathname === "/register") return true;
   if (pathname === "/katalog") return true;
