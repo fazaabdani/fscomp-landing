@@ -769,3 +769,122 @@
 
 /* Lokasi anchor for nav */
 #lokasi { scroll-margin-top: 80px; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  /* NAV */
+  .nav {
+    padding: 12px 20px;
+  }
+  .navScrolled {
+    padding: 10px 20px;
+  }
+  .navLinks {
+    display: none;
+  }
+  .btnWa {
+    padding: 8px 14px;
+    font-size: 12px;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 100px 20px 72px;
+  }
+  .heroBadge {
+    font-size: 11px;
+    padding: 5px 14px;
+    text-align: center;
+  }
+  .heroSub {
+    font-size: 15px;
+  }
+  .heroCta {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+  .btnPrimary, .btnOutline {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+  .trustStrip {
+    gap: 10px;
+  }
+  .trustItem {
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+
+  /* TICKER */
+  .tickerItem {
+    padding: 0 20px;
+    font-size: 12px;
+  }
+
+  /* PRODUK */
+  .produk {
+    padding: 72px 20px;
+  }
+  .produkGrid {
+    grid-template-columns: 1fr;
+  }
+
+  /* QC */
+  .qcSection {
+    padding: 72px 20px;
+  }
+  .qcInner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .statsRow {
+    gap: 24px;
+  }
+  .statNum {
+    font-size: 32px;
+  }
+  .qcGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* TESTIMONI */
+  .testiSection {
+    padding: 72px 20px;
+  }
+  .testiGrid {
+    grid-template-columns: 1fr;
+  }
+
+  /* CTA */
+  .ctaBottom {
+    padding: 72px 20px;
+  }
+  .ctaBox {
+    padding: 36px 24px;
+  }
+  .ctaBox h2 {
+    font-size: 26px;
+  }
+
+  /* FOOTER */
+  .footer {
+    padding: 32px 20px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .qcGrid {
+    grid-template-columns: 1fr;
+  }
+  .trustStrip {
+    flex-direction: column;
+    align-items: center;
+  }
+}
