@@ -1,4 +1,0 @@
-DROP INDEX IF EXISTS "Sale_unitId_key";
-
-ALTER TABLE "Sale" ADD COLUMN "voidedAt" TIMESTAMP(3);
-ALTER TABLE "Sale" ADD COLUMN "voidReason" TEXT;
