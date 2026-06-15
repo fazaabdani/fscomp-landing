@@ -730,27 +730,76 @@
 /* FOOTER */
 .footer {
   border-top: 1px solid var(--border);
-  padding: 40px 48px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 16px;
+  padding: 48px 48px 32px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: start;
+  gap: 32px;
   color: var(--dim);
   font-size: 13px;
   position: relative;
   z-index: 1;
-  background: rgba(5, 11, 24, 0.6);
+  background: rgba(5, 11, 24, 0.85);
 }
-.footer a {
+.footerBrand {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.footerTagline {
+  font-size: 13px;
+  color: var(--dim);
+  line-height: 1.6;
+}
+.footerInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.footerMapLink {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: var(--dim);
+  text-decoration: none;
+  font-size: 13px;
+  line-height: 1.6;
+  transition: color 0.2s;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: rgba(26, 108, 246, 0.04);
+}
+.footerMapLink:hover {
+  color: var(--cyan);
+  border-color: var(--border-br);
+  background: rgba(26, 108, 246, 0.1);
+}
+.footerMapIcon { flex-shrink: 0; font-size: 16px; }
+.footerPhone {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   color: var(--blue-br);
   text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
   transition: color 0.2s;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: rgba(26, 108, 246, 0.04);
 }
-.footer a:hover { color: var(--cyan); }
+.footerPhone:hover {
+  color: var(--cyan);
+  border-color: var(--border-br);
+  background: rgba(26, 108, 246, 0.1);
+}
 .footerCopy {
   color: rgba(240, 246, 255, 0.25);
   font-size: 12px;
+  align-self: end;
+  text-align: right;
 }
 
 /* REVEAL */
@@ -871,11 +920,12 @@
 
   /* FOOTER */
   .footer {
-    padding: 32px 20px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-    font-size: 12px;
+    padding: 36px 20px 24px;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .footerCopy {
+    text-align: left;
   }
 }
 

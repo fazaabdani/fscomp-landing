@@ -338,13 +338,26 @@ export default function LandingPage() {
 
       {/* FOOTER */}
       <footer className={s.footer} id="lokasi">
-        <div className={s.navLogo}>
-          <div className={s.logoIcon}>FS</div>
-          <span>FS Comp</span>
+        <div className={s.footerBrand}>
+          <div className={s.navLogo}>
+            <div className={s.logoIcon}>FS</div>
+            <span>FS Comp</span>
+          </div>
+          <p className={s.footerTagline}>Laptop second berkualitas,<br />Wiradesa, Pekalongan.</p>
         </div>
-        <div>
-          📍 Jl. Wiradesa No.1 RT22/RW05, Wiradesa, Kab. Pekalongan<br />
-          <a href={WA}>0816660056</a>
+        <div className={s.footerInfo}>
+          <a
+            className={s.footerMapLink}
+            href="https://share.google/Qfp4ZeCcdg3FFfJZp"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span className={s.footerMapIcon}>📍</span>
+            <span>Jl. Wiradesa No.1 RT22/RW05,<br />Wiradesa, Kab. Pekalongan</span>
+          </a>
+          <a className={s.footerPhone} href={WA}>
+            <span>💬</span> 0816-660-056
+          </a>
         </div>
         <div className={s.footerCopy}>© 2025 FS Comp</div>
       </footer>
