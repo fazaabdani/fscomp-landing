@@ -353,13 +353,13 @@ export default function LandingPage() {
             rel="noopener noreferrer"
           >
             <span className={s.footerMapIcon}>📍</span>
-            <span>Jl. Wiradesa No.1 RT22/RW05,<br />Wiradesa, Kab. Pekalongan</span>
+            <span>Jalan Raya Wiradesa No.1 RT22, RW.05,<br />Ds. Wiradesa, Kec. Wiradesa,<br />Kabupaten Pekalongan, Jawa Tengah 51152</span>
           </a>
           <a className={s.footerPhone} href={WA}>
             <span>💬</span> 0816-660-056
           </a>
         </div>
-        <div className={s.footerCopy}>© 2025 FS Comp</div>
+        <div className={s.footerCopy}>© 2026 FS Comp</div>
       </footer>
     </div>
   );
