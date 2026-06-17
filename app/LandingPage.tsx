@@ -31,7 +31,7 @@ const TESTI = [
 
 const STATS = [
   { target: 10, suffix: '+', label: 'Poin QC Check' },
-  { target: 500, suffix: '+', label: 'Unit Terjual' },
+  { target: 1000, suffix: '+', label: 'Unit Laptop Terjual' },
   { target: 5, suffix: '⭐', label: 'Rating Pelanggan' },
 ];
 
