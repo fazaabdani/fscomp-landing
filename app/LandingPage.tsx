@@ -359,7 +359,12 @@ export default function LandingPage() {
             <span>💬</span> 0816-660-056
           </a>
         </div>
-        <div className={s.footerCopy}>© 2026 FS Comp</div>
+        <div className={s.footerCopy}>
+          © 2026 FS Comp · Website dibuat oleh{' '}
+          <a href="https://fsdev.id" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'underline' }}>
+            FS Dev
+          </a>
+        </div>
       </footer>
     </div>
   );
