@@ -17,8 +17,13 @@ export const metadata: Metadata = {
     canonical: 'https://fscomp.id/',
   },
   icons: {
-    icon: [{ url: '/favicon.svg', type: 'image/svg+xml' }],
-    shortcut: '/favicon.svg',
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/icon.png', type: 'image/png', sizes: '48x48' },
+    ],
+    shortcut: '/favicon.ico',
+    apple: '/apple-icon.png',
   },
   openGraph: {
     title: 'FS Comp — Laptop Second Berkualitas, Wiradesa Pekalongan',
