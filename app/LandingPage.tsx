@@ -205,7 +205,7 @@ export default function LandingPage() {
       {/* NAV */}
       <nav ref={navRef} className={s.nav}>
         <div className={s.navLogo}>
-          <div className={s.logoIcon}>FS</div>
+          <img src="/logo-mark.png" alt="FS Comp" className={s.logoIcon} />
           <span>FS Comp</span>
         </div>
         <ul className={s.navLinks}>
@@ -340,7 +340,7 @@ export default function LandingPage() {
       <footer className={s.footer} id="lokasi">
         <div className={s.footerBrand}>
           <div className={s.navLogo}>
-            <div className={s.logoIcon}>FS</div>
+            <img src="/logo-mark.png" alt="FS Comp" className={s.logoIcon} />
             <span>FS Comp</span>
           </div>
           <p className={s.footerTagline}>Laptop second berkualitas,<br />Wiradesa, Pekalongan.</p>
