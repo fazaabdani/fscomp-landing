@@ -11,14 +11,22 @@ const TICKER_ITEMS = [
   'Aksesoris Lengkap',
   'Konsultasi Gratis',
   'Pengiriman Aman',
-  'FS Comp Wiradesa Pekalongan',
+  'Pusat Laptop Second Pekalongan & Sekitarnya',
 ];
 
+const WA_NUMBER = '62816660056';
+const GMAPS_URL = 'https://share.google/Qfp4ZeCcdg3FFfJZp';
+const IG_URL = 'https://www.instagram.com/fscomp.id/';
+
+function waLink(message: string) {
+  return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(message)}`;
+}
+
 const PRODUK = [
-  { icon: '💻', title: 'Laptop Second', desc: 'Pilihan terbaik untuk kerja, sekolah, kuliah, dan usaha. Dicek QC ketat, bergaransi toko.', cta: 'Konsultasi' },
-  { icon: '🖥️', title: 'Rakit PC Custom', desc: 'Rakit PC sesuai kebutuhan dan anggaran Anda. Konsultasikan spesifikasi dan budget dulu.', cta: 'Konsultasi' },
-  { icon: '🖱️', title: 'Aksesoris', desc: 'Keyboard, mouse, kabel, adaptor, dan perlengkapan komputer lengkap dari brand terpercaya.', cta: 'Lihat Produk' },
-  { icon: '🔧', title: 'Servis Laptop/PC', desc: 'Install ulang, upgrade SSD/RAM, cleaning, dan pengecekan oleh teknisi berpengalaman.', cta: 'Servis Sekarang' },
+  { icon: '💻', title: 'Laptop Second', desc: 'Pilihan terbaik untuk kerja, sekolah, kuliah, dan usaha. Dicek QC ketat, bergaransi toko.', cta: 'Konsultasi', href: waLink('Halo FS Comp, saya mau tanya-tanya soal laptop second.') },
+  { icon: '🖥️', title: 'Rakit PC Custom', desc: 'Rakit PC sesuai kebutuhan dan anggaran Anda. Konsultasikan spesifikasi dan budget dulu.', cta: 'Konsultasi', href: waLink('Halo FS Comp, saya mau konsultasi rakit PC custom.') },
+  { icon: '🖱️', title: 'Aksesoris', desc: 'Keyboard, mouse, kabel, adaptor, dan perlengkapan komputer lengkap dari brand terpercaya.', cta: 'Lihat Produk', href: 'https://katalog.fscomp.id' },
+  { icon: '🔧', title: 'Servis Laptop/PC', desc: 'Install ulang, upgrade SSD/RAM, cleaning, dan pengecekan oleh teknisi berpengalaman.', cta: 'Servis Sekarang', href: waLink('Halo FS Comp, saya mau servis laptop/PC.') },
 ];
 
 const QC_ITEMS = ['Fisik & Engsel', 'Layar', 'Keyboard', 'Touchpad', 'Baterai', 'SSD / RAM', 'Port USB', 'Charger', 'WiFi', 'Performa'];
@@ -29,13 +37,42 @@ const TESTI = [
   { text: '"Servis laptop saya yang lemot jadi kencang lagi. Upgrade SSD-nya terasa banget bedanya. Harga servis juga transparan dan wajar."', name: 'Bu Sari', role: 'Guru · Wiradesa' },
 ];
 
-const STATS = [
+type Stat = { target: number; suffix: string; label: string; decimals?: number; href?: string };
+
+const STATS: Stat[] = [
   { target: 10, suffix: '+', label: 'Poin QC Check' },
   { target: 1000, suffix: '+', label: 'Unit Laptop Terjual' },
-  { target: 5, suffix: '⭐', label: 'Rating Pelanggan' },
+  { target: 4.8, suffix: '★', label: 'Rating Google (124 Ulasan)', decimals: 1, href: GMAPS_URL },
 ];
 
-const WA = 'https://wa.me/62816660056';
+const NAV_LINKS = [
+  { href: '#produk', label: 'Produk' },
+  { href: '#qc', label: 'QC' },
+  { href: '#testi', label: 'Testimoni' },
+  { href: '#faq', label: 'FAQ' },
+  { href: '#lokasi', label: 'Lokasi' },
+];
+
+const FAQ_ITEMS = [
+  {
+    q: 'Berapa lama garansi laptop second di FS Comp?',
+    a: 'Garansi mencakup software 3 bulan dan hardware 3 minggu sejak tanggal pembelian.',
+  },
+  {
+    q: 'Apakah FS Comp menerima tukar tambah laptop lama?',
+    a: 'Ya, FS Comp menerima tukar tambah/beli laptop bekas — khusus untuk unit yang kondisinya benar-benar normal dan lolos QC FS Comp. Chat admin dulu untuk cek kondisi dan estimasi harga.',
+  },
+  {
+    q: 'Metode pembayaran apa saja yang tersedia?',
+    a: 'Pembayaran cash atau transfer bank. Saat ini FS Comp belum menyediakan opsi cicilan/kredit.',
+  },
+  {
+    q: 'Bagaimana cara membeli laptop di FS Comp?',
+    a: 'Chat admin via WhatsApp untuk ceritakan kebutuhan dan budget, admin bantu rekomendasikan unit yang cocok, cek kondisi unit, lalu bayar cash/transfer — garansi langsung berlaku sejak itu.',
+  },
+];
+
+const WA = waLink('Halo FS Comp, saya mau tanya-tanya.');
 
 export default function LandingPage() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -44,6 +81,8 @@ export default function LandingPage() {
   const statsRowRef = useRef<HTMLDivElement>(null);
   const [statVals, setStatVals] = useState(STATS.map(() => 0));
   const statsDone = useRef(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
 
   // Canvas particles
   useEffect(() => {
@@ -52,9 +91,13 @@ export default function LandingPage() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) return;
+
     let W = 0, H = 0;
     let mouseX = 0, mouseY = 0;
     let animId: number;
+    let running = true;
 
     const resize = () => {
       W = canvas.width = window.innerWidth;
@@ -64,6 +107,12 @@ export default function LandingPage() {
     };
     resize();
     window.addEventListener('resize', resize);
+
+    const onVisibility = () => {
+      running = !document.hidden;
+      if (running) draw();
+    };
+    document.addEventListener('visibilitychange', onVisibility);
 
     class Dot {
       x = 0; y = 0; vx = 0; vy = 0; r = 0; alpha = 0;
@@ -88,7 +137,8 @@ export default function LandingPage() {
       }
     }
 
-    const particles = Array.from({ length: 80 }, () => new Dot());
+    const particleCount = window.innerWidth < 768 ? 30 : 80;
+    const particles = Array.from({ length: particleCount }, () => new Dot());
 
     const onMouse = (e: MouseEvent) => { mouseX = e.clientX; mouseY = e.clientY; };
     document.addEventListener('mousemove', onMouse);
@@ -128,11 +178,13 @@ export default function LandingPage() {
         particles[i].update();
         particles[i].draw();
       }
-      animId = requestAnimationFrame(draw);
+      if (running) animId = requestAnimationFrame(draw);
     };
     draw();
 
     return () => {
+      running = false;
+      document.removeEventListener('visibilitychange', onVisibility);
       cancelAnimationFrame(animId);
       window.removeEventListener('resize', resize);
       document.removeEventListener('mousemove', onMouse);
@@ -182,7 +234,7 @@ export default function LandingPage() {
           statsDone.current = true;
           STATS.forEach((stat, i) => {
             let cur = 0;
-            const step = Math.ceil(stat.target / 60);
+            const step = stat.target / 60;
             const interval = setInterval(() => {
               cur = Math.min(cur + step, stat.target);
               setStatVals(prev => { const next = [...prev]; next[i] = cur; return next; });
@@ -199,8 +251,10 @@ export default function LandingPage() {
 
   return (
     <div className={s.root}>
-      <canvas ref={canvasRef} className={s.bgCanvas} id="bg" />
-      <div ref={glowRef} className={s.cursorGlow} />
+      <canvas ref={canvasRef} className={s.bgCanvas} id="bg" aria-hidden="true" />
+      <div ref={glowRef} className={s.cursorGlow} aria-hidden="true" />
+
+      <a href="#produk" className={s.skipLink}>Langsung ke konten</a>
 
       {/* NAV */}
       <nav ref={navRef} className={s.nav}>
@@ -209,19 +263,42 @@ export default function LandingPage() {
           <span>FS Comp</span>
         </div>
         <ul className={s.navLinks}>
-          <li><a href="#produk">Produk</a></li>
-          <li><a href="#qc">QC</a></li>
-          <li><a href="#testi">Testimoni</a></li>
-          <li><a href="#lokasi">Lokasi</a></li>
+          {NAV_LINKS.map(link => (
+            <li key={link.href}><a href={link.href}>{link.label}</a></li>
+          ))}
         </ul>
-        <a className={s.btnWa} href={WA}>💬 WhatsApp</a>
+        <div className={s.navRight}>
+          <a className={s.btnWa} href={WA}>💬 WhatsApp</a>
+          <button
+            type="button"
+            className={s.menuBtn}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-menu"
+            aria-label={menuOpen ? 'Tutup menu' : 'Buka menu'}
+            onClick={() => setMenuOpen(o => !o)}
+          >
+            <span className={`${s.menuBar} ${menuOpen ? s.menuBarOpen : ''}`} />
+          </button>
+        </div>
       </nav>
+
+      {/* MOBILE MENU */}
+      <div id="mobile-menu" className={`${s.mobileMenu} ${menuOpen ? s.mobileMenuOpen : ''}`}>
+        <ul>
+          {NAV_LINKS.map(link => (
+            <li key={link.href}>
+              <a href={link.href} onClick={() => setMenuOpen(false)}>{link.label}</a>
+            </li>
+          ))}
+        </ul>
+        <a className={s.btnPrimary} href={WA} onClick={() => setMenuOpen(false)}>💬 Chat WhatsApp</a>
+      </div>
 
       {/* HERO */}
       <section className={s.hero}>
         <div className={s.heroBadge}>
-          <div className={s.badgeDot} />
-          Pusat Laptop Second Terpercaya · Wiradesa, Pekalongan
+          <div className={s.badgeDot} aria-hidden="true" />
+          Pusat Laptop Second Terpercaya · Pekalongan &amp; Sekitarnya
         </div>
         <h1 className={s.heroH1}>
           <span className={s.line1}>Laptop Berkualitas,</span>
@@ -235,7 +312,7 @@ export default function LandingPage() {
           <a className={s.btnOutline} href="https://katalog.fscomp.id">Lihat Katalog →</a>
         </div>
         <div className={s.trustStrip}>
-          {[['✓', 'Unit Dicek Sebelum Dijual'], ['🛡', 'Garansi Toko'], ['🔧', 'Servis Profesional'], ['📦', 'Pengiriman Aman']].map(([icon, label]) => (
+          {[['✓', 'Unit Dicek Sebelum Dijual'], ['🛡', 'Garansi Toko'], ['🔁', 'Terima Tukar Tambah'], ['🔧', 'Servis Profesional'], ['📦', 'Pengiriman Aman']].map(([icon, label]) => (
             <div className={s.trustItem} key={label}>
               <span className={s.trustIcon}>{icon}</span> {label}
             </div>
@@ -267,13 +344,17 @@ export default function LandingPage() {
         </div>
         <div className={s.produkGrid}>
           {PRODUK.map((p, i) => (
-            <div className={`${s.card} ${s.reveal} ${[s.revealDelay1, s.revealDelay2, s.revealDelay3, s.revealDelay1][i]}`} key={p.title}>
-              <div className={s.cardShine} />
-              <div className={s.cardIcon}>{p.icon}</div>
+            <a
+              className={`${s.card} ${s.reveal} ${[s.revealDelay1, s.revealDelay2, s.revealDelay3, s.revealDelay1][i]}`}
+              href={p.href}
+              key={p.title}
+            >
+              <div className={s.cardShine} aria-hidden="true" />
+              <div className={s.cardIcon} aria-hidden="true">{p.icon}</div>
               <h3>{p.title}</h3>
               <p>{p.desc}</p>
               <div className={s.cardCta}>{p.cta} <span>→</span></div>
-            </div>
+            </a>
           ))}
         </div>
       </section>
@@ -287,12 +368,24 @@ export default function LandingPage() {
             <h2 className={s.sectionTitle}>Kami tidak<br />asal jual.</h2>
             <p>Setiap laptop second dicek menyeluruh dari fisik, fungsi, hingga performa — sebelum sampai ke tangan Anda. Tenang, nyaman, terpercaya.</p>
             <div className={s.statsRow} ref={statsRowRef}>
-              {STATS.map((stat, i) => (
-                <div className={s.stat} key={stat.label}>
-                  <div className={s.statNum}>{statVals[i]}{stat.suffix}</div>
-                  <div className={s.statLabel}>{stat.label}</div>
-                </div>
-              ))}
+              {STATS.map((stat, i) => {
+                const value = stat.decimals ? statVals[i].toFixed(stat.decimals) : Math.round(statVals[i]);
+                const body = (
+                  <>
+                    <div className={s.statNum}>{value}{stat.suffix}</div>
+                    <div className={s.statLabel}>{stat.label}</div>
+                  </>
+                );
+                return stat.href ? (
+                  <a className={s.stat} href={stat.href} target="_blank" rel="noopener noreferrer" key={stat.label}>
+                    {body}
+                  </a>
+                ) : (
+                  <div className={s.stat} key={stat.label}>
+                    {body}
+                  </div>
+                );
+              })}
             </div>
           </div>
           <div className={`${s.qcGrid} ${s.reveal}`}>
@@ -324,9 +417,36 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* FAQ */}
+      <section className={`${s.faqSection} ${s.reveal}`} id="faq">
+        <div className={s.testiHead}>
+          <div className={s.sectionLabel}>FAQ</div>
+          <h2 className={s.sectionTitle}>Pertanyaan yang sering ditanyakan</h2>
+        </div>
+        <div className={s.faqList}>
+          {FAQ_ITEMS.map((item, i) => {
+            const isOpen = openFaq === i;
+            return (
+              <div className={`${s.faqItem} ${isOpen ? s.faqItemOpen : ''}`} key={item.q}>
+                <button
+                  type="button"
+                  className={s.faqQuestion}
+                  aria-expanded={isOpen}
+                  onClick={() => setOpenFaq(isOpen ? null : i)}
+                >
+                  {item.q}
+                  <span className={s.faqIcon} aria-hidden="true">{isOpen ? '−' : '+'}</span>
+                </button>
+                {isOpen && <p className={s.faqAnswer}>{item.a}</p>}
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
       {/* CTA */}
       <section className={`${s.ctaBottom} ${s.reveal}`}>
-        <div className={s.ctaGlow} />
+        <div className={s.ctaGlow} aria-hidden="true" />
         <div className={s.ctaBox}>
           <h2>Butuh rekomendasi<br />laptop yang tepat?</h2>
           <p>Ceritakan kebutuhan, budget, dan pemakaian Anda.<br />Admin FS Comp siap bantu carikan unit yang paling cocok.</p>
@@ -343,20 +463,27 @@ export default function LandingPage() {
             <div className={s.logoIcon}>FS</div>
             <span>FS Comp</span>
           </div>
-          <p className={s.footerTagline}>Laptop second berkualitas,<br />Wiradesa, Pekalongan.</p>
+          <p className={s.footerTagline}>Pusat laptop second berkualitas,<br />Pekalongan &amp; sekitarnya.</p>
+          <div className={s.footerSocial}>
+            <a href={IG_URL} target="_blank" rel="noopener noreferrer" aria-label="Instagram FS Comp">📷 Instagram</a>
+          </div>
         </div>
         <div className={s.footerInfo}>
           <a
             className={s.footerMapLink}
-            href="https://share.google/Qfp4ZeCcdg3FFfJZp"
+            href={GMAPS_URL}
             target="_blank"
             rel="noopener noreferrer"
           >
             <span className={s.footerMapIcon}>📍</span>
             <span>Jalan Raya Wiradesa No.1 RT22, RW.05,<br />Ds. Wiradesa, Kec. Wiradesa,<br />Kabupaten Pekalongan, Jawa Tengah 51152</span>
           </a>
+          <div className={s.footerHours}>
+            <span className={s.footerMapIcon}>🕒</span>
+            <span>Senin–Rabu &amp; Sabtu 09.00–17.00<br />Jumat 09.00–16.30 · Minggu Tutup</span>
+          </div>
           <a className={s.footerPhone} href={WA}>
-            <span>💬</span> 0816-660-056
+            <span>💬</span> 081 666 0056
           </a>
         </div>
         <div className={s.footerCopy}>
