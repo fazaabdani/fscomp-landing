@@ -169,3 +169,11 @@ Awal sesi ini diasumsikan fscomp.id ada di **server toko** (`100.97.87.101`). Se
 - Sudah diperbarui juga di `C:\Users\X1 YOGA\.claude\CLAUDE.md` (catatan infrastruktur global) supaya sesi berikutnya tidak salah asumsi lagi.
 
 **Status per commit `38016e3` (2026-09-17): sudah di-push ke GitHub `main`, TAPI belum live di fscomp.id** — nunggu redeploy Coolify dipicu (lihat opsi di atas).
+
+## 12. Update 2026-09-19: Coolify lama ternyata sudah mati total, deploy manual berhasil
+
+Setelah ditelusuri lebih lanjut (lihat kronologi di `DEPLOYMENT.md`), ternyata **tidak ada Coolify manapun yang bisa dipakai redeploy app ini lagi** — instalasi Coolify yang dulu mengelola "my-first-project" (termasuk fscomp-landing) jalan di **VPS lama langganan Rumahweb**, yang sudah dimatikan setelah semua container dipindah manual ke VPS Hostinger saat ini. Coolify-nya sendiri tidak ikut dipindah, jadi hilang total.
+
+**Solusi yang diterapkan**: tambah `Dockerfile` (multi-stage, pakai `output: 'standalone'` Next.js) supaya build tidak lagi bergantung nixpacks/Coolify — bisa di-build manual pakai `docker build` langsung di server. Prosedur lengkap & command siap pakai ada di **[`DEPLOYMENT.md`](../DEPLOYMENT.md)** di root repo — baca itu untuk redeploy berikutnya, jangan cari-cari Coolify lagi.
+
+**Hasil**: commit `8ff0a68` berhasil di-build & di-deploy manual (image `fscomp-landing:8ff0a68`), dikonfirmasi live di fscomp.id (title, FAQ, nomor telepon, JSON-LD semua sudah sesuai perubahan terbaru). Backup `docker-compose.yaml` lama tersimpan di server dengan suffix `.bak-20260919-120304` kalau perlu rollback.
