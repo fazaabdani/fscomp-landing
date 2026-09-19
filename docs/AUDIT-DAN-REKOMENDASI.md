@@ -157,3 +157,15 @@ Sudah terjawab: nomor WA, garansi, tukar tambah, cicilan (lihat bagian 9b). Sisa
 4. Facebook & TikTok resmi — boleh minta link persisnya untuk ditaut di footer & schema (`sameAs`)?
 
 Setelah ini terjawab, saya lanjut ke bagian "menengah" (cara beli, sticky mobile CTA, foto asli) dan "besar" (cuplikan katalog live, tracking, konten SEO) dari daftar prioritas di atas.
+
+## 11. Koreksi penting: lokasi hosting fscomp.id (2026-09-17)
+
+Awal sesi ini diasumsikan fscomp.id ada di **server toko** (`100.97.87.101`). Setelah ditelusuri langsung (cek `cloudflared` ingress di server toko — tidak ada rule untuk `fscomp.id`; lalu cek Traefik label di VPS 1), ternyata:
+
+- **fscomp.id (landing ini) dan katalog.fscomp.id sama-sama di-hosting di VPS 1 (`187.77.127.250`)**, bukan server toko.
+- Coolify-managed penuh: project Coolify **"my-first-project"**, app **`fscomp-landing`** (applicationId `2`, resourceName `fscomp-landingmain-a14n7su0te2app22cesdv6e4`), folder di server: `/opt/fscomp-family/fscomp-landing/`.
+- Image Docker di-tag pakai **git commit SHA** (image `s2wmuy4o6nu8dov7ox1cowti:<sha>`) — konfirmasi bukti: image yang jalan sebelum sesi ini persis tag `9bbfdd0` (commit terakhir sebelum sesi ini mulai).
+- **Repo GitHub `fazaabdani/fscomp-landing` TIDAK punya webhook terpasang** (dicek via `gh api repos/fazaabdani/fscomp-landing/hooks` → kosong) — artinya **`git push` ke `main` TIDAK otomatis trigger redeploy Coolify**. Perlu salah satu: klik "Redeploy" manual di Coolify UI, atau pasang webhook GitHub→Coolify supaya auto-deploy tiap push ke `main` (rekomendasi, biar workflow ke depan lebih lancar).
+- Sudah diperbarui juga di `C:\Users\X1 YOGA\.claude\CLAUDE.md` (catatan infrastruktur global) supaya sesi berikutnya tidak salah asumsi lagi.
+
+**Status per commit `38016e3` (2026-09-17): sudah di-push ke GitHub `main`, TAPI belum live di fscomp.id** — nunggu redeploy Coolify dipicu (lihat opsi di atas).
