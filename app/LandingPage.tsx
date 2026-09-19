@@ -48,9 +48,17 @@ const STATS: Stat[] = [
 const NAV_LINKS = [
   { href: '#produk', label: 'Produk' },
   { href: '#qc', label: 'QC' },
+  { href: '#tukar-tambah', label: 'Jual Laptop' },
   { href: '#testi', label: 'Testimoni' },
   { href: '#faq', label: 'FAQ' },
   { href: '#lokasi', label: 'Lokasi' },
+];
+
+const TUKAR_TAMBAH_STEPS = [
+  { icon: '📸', title: 'Foto Unit Anda', desc: 'Foto laptop dari beberapa sisi — bodi, layar, keyboard — biar admin bisa cek kondisinya.' },
+  { icon: '💬', title: 'Kirim ke WhatsApp', desc: 'Sertakan merk, tipe, dan keluhan (kalau ada). Admin balas cepat dengan estimasi awal.' },
+  { icon: '🔍', title: 'Dicek Sesuai Standar QC', desc: 'Unit dicek langsung di toko — sama seperti standar QC unit yang kami jual, biar harga yang ditawarkan adil.' },
+  { icon: '🤝', title: 'Jual atau Tukar Tambah', desc: 'Cocok? Bisa dijual langsung dapat cash, atau dipakai buat tukar tambah ke unit lain yang Anda incar.' },
 ];
 
 const FAQ_ITEMS = [
@@ -396,6 +404,31 @@ export default function LandingPage() {
             ))}
           </div>
         </div>
+      </section>
+
+      {/* TUKAR TAMBAH */}
+      <section className={`${s.tukarSection} ${s.reveal}`} id="tukar-tambah">
+        <div className={s.testiHead}>
+          <div className={s.sectionLabel}>Jual / Tukar Tambah</div>
+          <h2 className={s.sectionTitle}>Punya laptop lama?<br />Jual atau tukar tambah di sini.</h2>
+          <p className={s.sectionSub}>FS Comp menerima laptop bekas Anda — dijual langsung dapat cash, atau dipakai sebagai tukar tambah ke unit lain.</p>
+        </div>
+        <div className={s.tukarGrid}>
+          {TUKAR_TAMBAH_STEPS.map((step, i) => (
+            <div className={`${s.tukarStep} ${s.reveal} ${[s.revealDelay1, s.revealDelay2, s.revealDelay3, s.revealDelay1][i]}`} key={step.title}>
+              <div className={s.tukarStepNum}>{i + 1}</div>
+              <div className={s.tukarStepIcon} aria-hidden="true">{step.icon}</div>
+              <h3>{step.title}</h3>
+              <p>{step.desc}</p>
+            </div>
+          ))}
+        </div>
+        <div className={s.tukarNote}>
+          ⚠️ Catatan: unit yang diterima harus dalam kondisi normal dan lolos QC FS Comp — bukan unit rusak berat/mati total.
+        </div>
+        <a className={s.btnPrimary} style={{ margin: '0 auto', display: 'inline-flex' }} href={waLink('Halo FS Comp, saya mau jual/tukar tambah laptop lama saya.')}>
+          📸 Kirim Foto via WhatsApp
+        </a>
       </section>
 
       {/* TESTIMONI */}
