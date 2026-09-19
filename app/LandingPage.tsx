@@ -22,6 +22,19 @@ function waLink(message: string) {
   return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(message)}`;
 }
 
+declare global {
+  interface Window {
+    gtag?: (...args: unknown[]) => void;
+    fbq?: (...args: unknown[]) => void;
+  }
+}
+
+function trackWaClick(label: string) {
+  if (typeof window === 'undefined') return;
+  window.gtag?.('event', 'whatsapp_click', { event_category: 'engagement', event_label: label });
+  window.fbq?.('track', 'Contact', { content_name: label });
+}
+
 const PRODUK = [
   { icon: '💻', title: 'Laptop Second', desc: 'Pilihan terbaik untuk kerja, sekolah, kuliah, dan usaha. Dicek QC ketat, bergaransi toko.', cta: 'Konsultasi', href: waLink('Halo FS Comp, saya mau tanya-tanya soal laptop second.') },
   { icon: '🖥️', title: 'Rakit PC Custom', desc: 'Rakit PC sesuai kebutuhan dan anggaran Anda. Konsultasikan spesifikasi dan budget dulu.', cta: 'Konsultasi', href: waLink('Halo FS Comp, saya mau konsultasi rakit PC custom.') },
@@ -276,7 +289,7 @@ export default function LandingPage() {
           ))}
         </ul>
         <div className={s.navRight}>
-          <a className={s.btnWa} href={WA}>💬 WhatsApp</a>
+          <a className={s.btnWa} href={WA} onClick={() => trackWaClick('nav')}>💬 WhatsApp</a>
           <button
             type="button"
             className={s.menuBtn}
@@ -299,7 +312,7 @@ export default function LandingPage() {
             </li>
           ))}
         </ul>
-        <a className={s.btnPrimary} href={WA} onClick={() => setMenuOpen(false)}>💬 Chat WhatsApp</a>
+        <a className={s.btnPrimary} href={WA} onClick={() => { trackWaClick('mobile_menu'); setMenuOpen(false); }}>💬 Chat WhatsApp</a>
       </div>
 
       {/* HERO */}
@@ -316,7 +329,7 @@ export default function LandingPage() {
           FS Comp menyediakan laptop second pilihan dengan QC ketat, rakit PC custom, aksesoris, dan servis profesional untuk kebutuhan kerja, sekolah, dan bisnis Anda.
         </p>
         <div className={s.heroCta}>
-          <a className={s.btnPrimary} href={WA}>💬 Konsultasi Sekarang</a>
+          <a className={s.btnPrimary} href={WA} onClick={() => trackWaClick('hero')}>💬 Konsultasi Sekarang</a>
           <a className={s.btnOutline} href="https://katalog.fscomp.id">Lihat Katalog →</a>
         </div>
         <div className={s.trustStrip}>
@@ -355,6 +368,7 @@ export default function LandingPage() {
             <a
               className={`${s.card} ${s.reveal} ${[s.revealDelay1, s.revealDelay2, s.revealDelay3, s.revealDelay1][i]}`}
               href={p.href}
+              onClick={() => { if (p.href.includes('wa.me')) trackWaClick(p.title); }}
               key={p.title}
             >
               <div className={s.cardShine} aria-hidden="true" />
@@ -426,7 +440,12 @@ export default function LandingPage() {
         <div className={s.tukarNote}>
           ⚠️ Catatan: unit yang diterima harus dalam kondisi normal dan lolos QC FS Comp — bukan unit rusak berat/mati total.
         </div>
-        <a className={s.btnPrimary} style={{ margin: '0 auto', display: 'inline-flex' }} href={waLink('Halo FS Comp, saya mau jual/tukar tambah laptop lama saya.')}>
+        <a
+          className={s.btnPrimary}
+          style={{ margin: '0 auto', display: 'inline-flex' }}
+          href={waLink('Halo FS Comp, saya mau jual/tukar tambah laptop lama saya.')}
+          onClick={() => trackWaClick('tukar_tambah')}
+        >
           📸 Kirim Foto via WhatsApp
         </a>
       </section>
@@ -483,7 +502,12 @@ export default function LandingPage() {
         <div className={s.ctaBox}>
           <h2>Butuh rekomendasi<br />laptop yang tepat?</h2>
           <p>Ceritakan kebutuhan, budget, dan pemakaian Anda.<br />Admin FS Comp siap bantu carikan unit yang paling cocok.</p>
-          <a className={s.btnPrimary} href={WA} style={{ justifyContent: 'center', fontSize: 15, padding: '16px 40px', margin: '0 auto', display: 'inline-flex' }}>
+          <a
+            className={s.btnPrimary}
+            href={WA}
+            onClick={() => trackWaClick('cta_bottom')}
+            style={{ justifyContent: 'center', fontSize: 15, padding: '16px 40px', margin: '0 auto', display: 'inline-flex' }}
+          >
             💬 Chat Admin FS Comp
           </a>
         </div>
@@ -515,7 +539,7 @@ export default function LandingPage() {
             <span className={s.footerMapIcon}>🕒</span>
             <span>Senin–Rabu &amp; Sabtu 09.00–17.00<br />Jumat 09.00–16.30 · Minggu Tutup</span>
           </div>
-          <a className={s.footerPhone} href={WA}>
+          <a className={s.footerPhone} href={WA} onClick={() => trackWaClick('footer_phone')}>
             <span>💬</span> 081 666 0056
           </a>
         </div>

@@ -81,9 +81,18 @@ Payoff lebih lambat (butuh bulan, bukan minggu) tapi ini yang membangun keunggul
 | 1 | Cuplikan katalog live di landing | Akses data/API dari `core.fscomp.id` (perlu dicek endpointnya) | Bisa, setelah tahu cara ambil datanya |
 | 2 | Opsi cicilan/paylater | Keputusan bisnis + daftar ke provider (Kredivo/Akulaku) | Tidak — ini keputusan & kerja sama bisnis, bukan kode |
 | 3 | Google review funnel | Place ID FS Comp + template pesan follow-up | Bisa, cepat |
-| 4 | Pixel/Analytics (GA4 + Meta Pixel) | ID GA4/Pixel dari akun Google/Meta Business FS Comp | Bisa, setelah dapat ID-nya dari kamu |
+| 4 | ✅ Pixel/Analytics (GA4 + Meta Pixel) | ID GA4/Pixel dari akun Google/Meta Business FS Comp | **Selesai 2026-09-19** |
 | 5 | Iklan berbayar | Budget + akun Ads (di luar scope kode) | Tidak — saya bisa bantu siapkan landing-nya saja |
-| 6 | Section tukar tambah mandiri | Tidak ada blocker | Bisa langsung |
+| 6 | ✅ Section tukar tambah mandiri | Tidak ada blocker | **Selesai 2026-09-19** |
 | 7 | Indikator stok real | Perlu data stok yang gampang diupdate (manual atau dari sistem Core) | Bisa versi manual dulu |
 
 **Rekomendasi urutan kerja**: mulai dari yang saya bisa kerjakan tanpa nunggu keputusan bisnis dulu — **poin 3 (review funnel), 4 (tracking), 6 (section tukar tambah)** — sambil kamu pertimbangkan poin 2 (cicilan) dan siapkan akses ke poin 1 (data katalog) & akun Ads.
+
+### Update 2026-09-19: Tracking sudah terpasang
+
+- **GA4 Measurement ID**: `G-NME96NZF9K` (property "FS COMP", stream `fscomp.id`)
+- **Meta Pixel ID**: `1026284083787634`
+- Dipasang di [`app/layout.tsx`](../app/layout.tsx) (base tag GA4 + Meta Pixel, load `afterInteractive` biar tidak menghambat render halaman).
+- Event kustom **`whatsapp_click`** (GA4) + **`Contact`** (Meta Pixel) dipasang di SEMUA tombol WhatsApp di halaman, dengan label beda per lokasi (`nav`, `hero`, `mobile_menu`, `cta_bottom`, `footer_phone`, `tukar_tambah`, dan nama produk untuk kartu produk) — lihat fungsi `trackWaClick()` di [`app/LandingPage.tsx`](../app/LandingPage.tsx). Ini yang menjawab pertanyaan "CTA mana yang paling sering diklik" dari GA4/Meta Ads Manager nanti.
+- Verifikasi: `window.gtag`/`window.fbq` terkonfirmasi jalan, `dataLayer` terisi config call yang benar, dan event `whatsapp_click` terkonfirmasi terkirim saat tombol WA disimulasikan diklik.
+- **Belum bisa diverifikasi data live masuk ke dashboard GA4/Meta** (butuh traffic asli setelah deploy — GA4 biasanya perlu sampai 48 jam untuk laporan standar muncul, walau Realtime report harusnya langsung kelihatan begitu ada pengunjung asli).
