@@ -1,7 +1,7 @@
 # SEO — Target halaman 1 Google untuk "laptop second"
 
 Tanggal: 2026-10-23
-Status: **audit selesai, perubahan on-page landing sudah diedit LOKAL (belum di-commit, belum di-deploy)**.
+Status: **audit selesai; perubahan on-page landing sudah di-commit (`df7eb15`) dan LIVE di fscomp.id sejak 2026-10-23.** Yang tersisa: tindakan owner (bagian 4A) dan perbaikan katalog di repo `fscomp-core` (bagian 4B).
 
 ## 1. Ekspektasi yang realistis
 

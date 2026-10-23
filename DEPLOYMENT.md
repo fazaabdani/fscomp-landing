@@ -68,4 +68,5 @@ ssh -i ~/.ssh/barbarluxe_vps root@187.77.127.250 "cp /opt/fscomp-family/fscomp-l
 
 | Tanggal | Commit | Catatan |
 |---|---|---|
+| 2026-10-23 | `df7eb15` | SEO lokal "laptop second Pekalongan" (H1/title/description) + sinkronisasi perubahan UI yang sudah live. Image `fscomp-landing:df7eb15`; compose lama dibackup `docker-compose.yaml.bak-20261023-135455`. Catatan: image sebelumnya (`ui-20261016-3d56d0e1`, 16 Okt) dibangun dari working copy yang tidak pernah di-commit — sejak ini source di git dan server sama lagi. |
 | 2026-09-19 | `8ff0a68` | Deploy manual pertama setelah ketauan Coolify lama sudah mati. Menambahkan `Dockerfile` + `output: 'standalone'` di `next.config.js` supaya build tidak lagi bergantung nixpacks/Coolify sama sekali. |
