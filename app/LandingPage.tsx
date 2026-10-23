@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 import s from './landing.module.css';
 
 const TICKER_ITEMS = [
@@ -17,6 +18,7 @@ const TICKER_ITEMS = [
 const WA_NUMBER = '62816660056';
 const GMAPS_URL = 'https://share.google/Qfp4ZeCcdg3FFfJZp';
 const IG_URL = 'https://www.instagram.com/fscomp.id/';
+const CATALOG_URL = 'https://core.fscomp.id/katalog#produk-ready';
 
 function waLink(message: string) {
   return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(message)}`;
@@ -36,7 +38,7 @@ function trackWaClick(label: string) {
 }
 
 const PRODUK = [
-  { icon: '💻', title: 'Laptop Second', desc: 'Pilihan terbaik untuk kerja, sekolah, kuliah, dan usaha. Dicek QC ketat, bergaransi toko.', cta: 'Konsultasi', href: waLink('Halo FS Comp, saya mau tanya-tanya soal laptop second.') },
+  { icon: '💻', title: 'Laptop Second', desc: 'Lihat unit ready beserta foto, spesifikasi, harga, lokasi, dan hasil QC terkini di katalog.', cta: 'Cek unit & harga', href: CATALOG_URL },
   { icon: '🖥️', title: 'Rakit PC Custom', desc: 'Rakit PC sesuai kebutuhan dan anggaran Anda. Konsultasikan spesifikasi dan budget dulu.', cta: 'Konsultasi', href: waLink('Halo FS Comp, saya mau konsultasi rakit PC custom.') },
   { icon: '🖱️', title: 'Aksesoris', desc: 'Keyboard, mouse, kabel, adaptor, dan perlengkapan komputer lengkap dari brand terpercaya.', cta: 'Lihat Produk', href: 'https://katalog.fscomp.id' },
   { icon: '🔧', title: 'Servis Laptop/PC', desc: 'Install ulang, upgrade SSD/RAM, cleaning, dan pengecekan oleh teknisi berpengalaman.', cta: 'Servis Sekarang', href: waLink('Halo FS Comp, saya mau servis laptop/PC.') },
@@ -45,17 +47,17 @@ const PRODUK = [
 const QC_ITEMS = ['Fisik & Engsel', 'Layar', 'Keyboard', 'Touchpad', 'Baterai', 'SSD / RAM', 'Port USB', 'Charger', 'WiFi', 'Performa'];
 
 const TESTI = [
-  { text: '"Laptop second-nya bagus banget, kondisi mulus dan langsung bisa dipakai. Admin juga ramah dan sabar kasih rekomendasi sesuai budget saya."', name: 'Rizki A.', role: 'Mahasiswa · Pekalongan' },
-  { text: '"Rakit PC gaming di sini hasilnya memuaskan. Harganya kompetitif, prosesnya cepat, dan hasilnya sesuai ekspektasi. Recommended!"', name: 'Dimas P.', role: 'Content Creator · Batang' },
-  { text: '"Servis laptop saya yang lemot jadi kencang lagi. Upgrade SSD-nya terasa banget bedanya. Harga servis juga transparan dan wajar."', name: 'Bu Sari', role: 'Guru · Wiradesa' },
+  { text: 'Recomended buat yang mau nyari laptop bekas tapi kualitas papan atas', name: 'Mirza Hielmy', href: 'https://www.google.com/maps/reviews/data=!4m5!14m4!1m3!1m2!1s111607552618369942383!2s0x2e7027c9f02ae485:0x70f6ead08c1bf742' },
+  { text: 'Pelayanan ramah, hasil servis juga bagus', name: 'Khozin 05', href: 'https://www.google.com/maps/reviews/data=!4m5!14m4!1m3!1m2!1s103426976757834425603!2s0x2e7027c9f02ae485:0x70f6ead08c1bf742' },
+  { text: 'Penjual ramah, harga terjangkau, pengiriman aman, dan rekomended bagi mahasiswa', name: 'Muhammad Afif Naufal', href: 'https://www.google.com/maps/reviews/data=!4m5!14m4!1m3!1m2!1s108358387374501189811!2s0x2e7027c9f02ae485:0x70f6ead08c1bf742' },
 ];
 
-type Stat = { target: number; suffix: string; label: string; decimals?: number; href?: string };
+type Stat = { value: string; suffix?: string; label: string; href?: string };
 
 const STATS: Stat[] = [
-  { target: 10, suffix: '+', label: 'Poin QC Check' },
-  { target: 1000, suffix: '+', label: 'Unit Laptop Terjual' },
-  { target: 4.8, suffix: '★', label: 'Rating Google (124 Ulasan)', decimals: 1, href: GMAPS_URL },
+  { value: '10', label: 'Pemeriksaan QC' },
+  { value: '4.8', suffix: '★', label: 'Rating Google', href: GMAPS_URL },
+  { value: 'LIVE', label: 'Stok & harga terbaru', href: CATALOG_URL },
 ];
 
 const NAV_LINKS = [
@@ -99,9 +101,6 @@ export default function LandingPage() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
   const navRef = useRef<HTMLElement>(null);
-  const statsRowRef = useRef<HTMLDivElement>(null);
-  const [statVals, setStatVals] = useState(STATS.map(() => 0));
-  const statsDone = useRef(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
@@ -158,7 +157,7 @@ export default function LandingPage() {
       }
     }
 
-    const particleCount = window.innerWidth < 768 ? 30 : 80;
+    const particleCount = window.innerWidth < 768 ? 12 : 36;
     const particles = Array.from({ length: particleCount }, () => new Dot());
 
     const onMouse = (e: MouseEvent) => { mouseX = e.clientX; mouseY = e.clientY; };
@@ -215,7 +214,7 @@ export default function LandingPage() {
   // Cursor glow
   useEffect(() => {
     const glow = glowRef.current;
-    if (!glow) return;
+    if (!glow || !window.matchMedia('(pointer: fine)').matches) return;
     const onMouse = (e: MouseEvent) => {
       glow.style.left = e.clientX + 'px';
       glow.style.top = e.clientY + 'px';
@@ -245,31 +244,6 @@ export default function LandingPage() {
     return () => obs.disconnect();
   }, []);
 
-  // Count-up stats
-  useEffect(() => {
-    const row = statsRowRef.current;
-    if (!row) return;
-    const obs = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && !statsDone.current) {
-          statsDone.current = true;
-          STATS.forEach((stat, i) => {
-            let cur = 0;
-            const step = stat.target / 60;
-            const interval = setInterval(() => {
-              cur = Math.min(cur + step, stat.target);
-              setStatVals(prev => { const next = [...prev]; next[i] = cur; return next; });
-              if (cur >= stat.target) clearInterval(interval);
-            }, 20);
-          });
-        }
-      },
-      { threshold: 0.3 }
-    );
-    obs.observe(row);
-    return () => obs.disconnect();
-  }, []);
-
   return (
     <div className={s.root}>
       <canvas ref={canvasRef} className={s.bgCanvas} id="bg" aria-hidden="true" />
@@ -280,7 +254,9 @@ export default function LandingPage() {
       {/* NAV */}
       <nav ref={navRef} className={s.nav}>
         <div className={s.navLogo}>
-          <div className={s.logoIcon}>FS</div>
+          <span className={s.logoIcon}>
+            <Image src="/fscomp-mark.png" alt="" width={36} height={36} />
+          </span>
           <span>FS Comp</span>
         </div>
         <ul className={s.navLinks}>
@@ -322,15 +298,15 @@ export default function LandingPage() {
           Pusat Laptop Second Terpercaya · Pekalongan &amp; Sekitarnya
         </div>
         <h1 className={s.heroH1}>
-          <span className={s.line1}>Laptop Berkualitas,</span>
-          <span className={s.line2}>Harga <span className={s.grad}>Masuk Akal</span></span>
+          <span className={s.line1}>Laptop Second Pekalongan,</span>
+          <span className={s.line2}>Bergaransi &amp; <span className={s.grad}>Harga Masuk Akal</span></span>
         </h1>
         <p className={s.heroSub}>
-          FS Comp menyediakan laptop second pilihan dengan QC ketat, rakit PC custom, aksesoris, dan servis profesional untuk kebutuhan kerja, sekolah, dan bisnis Anda.
+          Jual laptop second Pekalongan yang sudah lolos QC: lihat unit ready lengkap dengan foto, spesifikasi, harga, dan lokasi stok di katalog FS Comp. Tersedia juga rakit PC custom, aksesoris, dan servis profesional.
         </p>
         <div className={s.heroCta}>
           <a className={s.btnPrimary} href={WA} onClick={() => trackWaClick('hero')}>💬 Konsultasi Sekarang</a>
-          <a className={s.btnOutline} href="https://katalog.fscomp.id">Lihat Katalog →</a>
+          <a className={s.btnOutline} href={CATALOG_URL}>Lihat Laptop Second Ready →</a>
         </div>
         <div className={s.trustStrip}>
           {[['✓', 'Unit Dicek Sebelum Dijual'], ['🛡', 'Garansi Toko'], ['🔁', 'Terima Tukar Tambah'], ['🔧', 'Servis Profesional'], ['📦', 'Pengiriman Aman']].map(([icon, label]) => (
@@ -389,12 +365,11 @@ export default function LandingPage() {
             <div className={s.sectionLabel}>Standar QC Kami</div>
             <h2 className={s.sectionTitle}>Kami tidak<br />asal jual.</h2>
             <p>Setiap laptop second dicek menyeluruh dari fisik, fungsi, hingga performa — sebelum sampai ke tangan Anda. Tenang, nyaman, terpercaya.</p>
-            <div className={s.statsRow} ref={statsRowRef}>
-              {STATS.map((stat, i) => {
-                const value = stat.decimals ? statVals[i].toFixed(stat.decimals) : Math.round(statVals[i]);
+            <div className={s.statsRow}>
+              {STATS.map((stat) => {
                 const body = (
                   <>
-                    <div className={s.statNum}>{value}{stat.suffix}</div>
+                    <div className={s.statNum}>{stat.value}{stat.suffix}</div>
                     <div className={s.statLabel}>{stat.label}</div>
                   </>
                 );
@@ -453,20 +428,21 @@ export default function LandingPage() {
       {/* TESTIMONI */}
       <section className={`${s.testiSection} ${s.reveal}`} id="testi">
         <div className={s.testiHead}>
-          <div className={s.sectionLabel}>Testimoni</div>
-          <h2 className={s.sectionTitle}>Yang mereka rasakan</h2>
-          <p className={s.sectionSub}>Pelanggan FS Comp dari Pekalongan dan sekitarnya.</p>
+          <div className={s.sectionLabel}>Ulasan Pelanggan</div>
+          <h2 className={s.sectionTitle}>Dipercaya pelanggan</h2>
+          <p className={s.sectionSub}>Kutipan ulasan Google yang dapat dibuka dan diverifikasi langsung.</p>
         </div>
         <div className={s.testiGrid}>
           {TESTI.map((t, i) => (
-            <div className={`${s.testiCard} ${s.reveal} ${[s.revealDelay1, s.revealDelay2, s.revealDelay3][i]}`} key={t.name}>
+            <a className={`${s.testiCard} ${s.reveal} ${[s.revealDelay1, s.revealDelay2, s.revealDelay3][i]}`} href={t.href} target="_blank" rel="noopener noreferrer" aria-label={`Buka ulasan Google dari ${t.name}`} key={t.name}>
               <div className={s.testiStars}>★★★★★</div>
               <p className={s.testiText}>{t.text}</p>
               <div className={s.testiName}>{t.name}</div>
-              <div className={s.testiRole}>{t.role}</div>
-            </div>
+              <div className={s.testiRole}>Ulasan Google ↗</div>
+            </a>
           ))}
         </div>
+        <a className={s.allReviews} href={GMAPS_URL} target="_blank" rel="noopener noreferrer">Baca semua ulasan di Google ↗</a>
       </section>
 
       {/* FAQ */}
@@ -517,7 +493,9 @@ export default function LandingPage() {
       <footer className={s.footer} id="lokasi">
         <div className={s.footerBrand}>
           <div className={s.navLogo}>
-            <div className={s.logoIcon}>FS</div>
+            <span className={s.logoIcon}>
+              <Image src="/fscomp-mark.png" alt="" width={36} height={36} />
+            </span>
             <span>FS Comp</span>
           </div>
           <p className={s.footerTagline}>Pusat laptop second berkualitas,<br />Pekalongan &amp; sekitarnya.</p>
@@ -537,7 +515,7 @@ export default function LandingPage() {
           </a>
           <div className={s.footerHours}>
             <span className={s.footerMapIcon}>🕒</span>
-            <span>Senin–Rabu &amp; Sabtu 09.00–17.00<br />Jumat 09.00–16.30 · Minggu Tutup</span>
+            <span>Senin–Sabtu 09.00–17.00<br />Minggu tutup</span>
           </div>
           <a className={s.footerPhone} href={WA} onClick={() => trackWaClick('footer_phone')}>
             <span>💬</span> 081 666 0056

@@ -7,8 +7,8 @@ const META_PIXEL_ID = '1026284083787634';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://fscomp.id'),
-  title: 'FS Comp — Pusat Laptop Second Pekalongan & Sekitarnya',
-  description: 'FS Comp adalah pusat laptop second di Pekalongan dan sekitarnya: QC ketat, bergaransi, rating 4.8 (124 ulasan Google), rakit PC custom, aksesoris, dan servis profesional.',
+  title: 'Jual Laptop Second Pekalongan Bergaransi — FS Comp',
+  description: 'Jual laptop second Pekalongan bergaransi di FS Comp, Wiradesa. Unit ready lengkap foto, spek & harga, QC ketat, terima tukar tambah. Buka Senin–Sabtu.',
   keywords: [
     'laptop second pekalongan',
     'pusat laptop second pekalongan',
@@ -28,16 +28,16 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: '/favicon.svg', type: 'image/svg+xml' },
-      { url: '/favicon.ico', sizes: 'any' },
-      { url: '/icon.png', type: 'image/png', sizes: '48x48' },
+      { url: '/favicon.svg?v=2', type: 'image/svg+xml' },
+      { url: '/favicon.ico?v=2', sizes: 'any' },
+      { url: '/icon.png?v=2', type: 'image/png', sizes: '48x48' },
     ],
-    shortcut: '/favicon.ico',
-    apple: '/apple-icon.png',
+    shortcut: '/favicon.ico?v=2',
+    apple: '/apple-icon.png?v=2',
   },
   openGraph: {
     title: 'FS Comp — Pusat Laptop Second Pekalongan & Sekitarnya',
-    description: 'Laptop second pilihan dengan QC ketat, bergaransi, rating 4.8 (124 ulasan Google), rakit PC custom, aksesoris, dan servis profesional.',
+    description: 'Laptop second pilihan dengan QC ketat dan garansi toko, rakit PC custom, aksesoris, dan servis profesional.',
     url: 'https://fscomp.id/',
     siteName: 'FS Comp',
     type: 'website',
@@ -77,23 +77,12 @@ const jsonLd = {
   openingHoursSpecification: [
     {
       '@type': 'OpeningHoursSpecification',
-      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Saturday'],
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
       opens: '09:00',
       closes: '17:00',
     },
-    {
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: ['Friday'],
-      opens: '09:00',
-      closes: '16:30',
-    },
   ],
   sameAs: ['https://www.instagram.com/fscomp.id/'],
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.8',
-    reviewCount: '124',
-  },
   areaServed: [
     { '@type': 'Place', name: 'Kabupaten Pekalongan' },
     { '@type': 'Place', name: 'Kota Pekalongan' },

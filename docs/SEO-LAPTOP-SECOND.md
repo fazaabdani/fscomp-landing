@@ -1,0 +1,59 @@
+# SEO — Target halaman 1 Google untuk "laptop second"
+
+Tanggal: 2026-10-23
+Status: **audit selesai, perubahan on-page landing sudah diedit LOKAL (belum di-commit, belum di-deploy)**.
+
+## 1. Ekspektasi yang realistis
+
+- Keyword "laptop second" polos itu nasional — halaman 1 dikuasai Tokopedia, Shopee, OLX, dan toko besar. Tidak realistis untuk toko lokal, dan tidak ada yang bisa menjamin posisi Google.
+- Yang realistis dan bernilai: **pencarian lokal** — "laptop second pekalongan", "jual laptop second pekalongan", "laptop bekas pekalongan", "laptop second wiradesa/kajen/batang". Di sini yang menentukan bukan cuma website, tapi **Google Business Profile (hasil peta)**.
+- Perubahan SEO butuh waktu: indeks ulang beberapa hari, naik peringkat biasanya minggu–bulan. Posisi saat ini **belum terukur** (pencarian `site:` lewat tool saya tidak bisa diandalkan). Ukur lewat Google Search Console.
+
+## 2. Temuan (diverifikasi 2026-10-23)
+
+| # | Temuan | Dampak |
+|---|---|---|
+| T1 | **Konten yang menarik traffic (14 unit laptop, harga, spek) ada di `core.fscomp.id/katalog` + `/unit/<id>`**, bukan di `fscomp.id`. Landing `fscomp.id` cuma 1 halaman. `katalog.fscomp.id` → 302 ke `core.fscomp.id/katalog`, `fscomp.id/katalog` → 307 ke sana. | Otoritas terpecah dua subdomain; domain utama tidak punya halaman produk. |
+| T2 | Halaman katalog & unit di core: server-rendered (bagus, teks terbaca crawler), ada title + meta description, ada `sitemap.xml` (17 URL) dan `robots.txt` berisi Sitemap. **Tapi: tidak ada `rel=canonical`, tidak ada JSON-LD sama sekali** (tanpa `Product`/`Offer`). Link ke unit membawa `?from=...`, `?view=compact/list` → URL duplikat tanpa canonical. | Risiko duplikasi + tidak ada rich result harga/stok. |
+| T3 | Judul unit memakai nama internal, mis. `DELL LATITUDE 7410 ADA WS DILAYAR - Rp 4.500.000 - FS Comp` (huruf kapital, istilah internal "WS di layar"). Deskripsi tidak menyebut "laptop second Pekalongan". | Judul jelek di hasil Google, kata kunci lokal tidak terpakai. |
+| T4 | **`https://www.fscomp.id` mengembalikan HTTP 526** (sertifikat origin tidak valid di Cloudflare). `http://fscomp.id` → 301 ke https (benar). | Pengunjung/link ke `www` error; sinyal link terbuang. Perlu diperbaiki di Cloudflare/DNS. |
+| T5 | Sitemap `fscomp.id` hanya 1 URL. `robots.txt` aman untuk Googlebot (blok hanya untuk bot training AI seperti GPTBot/ClaudeBot; `Google-Extended` yang diblok tidak memengaruhi Google Search). | OK, tidak ada blokir. |
+| T6 | H1 lama `Laptop Berkualitas, Harga Masuk Akal` tidak mengandung kata kunci. | **Sudah diedit** (lihat bagian 3). |
+| T7 | Nomor telepon di Google Business Profile (0816-692-428, nomor pribadi owner) beda dengan website (0816-660-056). Konsistensi NAP memengaruhi peringkat peta. | Perlu diganti owner di GBP (lihat audit 9b). |
+| T8 | Jumlah ulasan Google 124 vs kompetitor lokal KLA Computer 1.703 (data audit 17 Sep). | Faktor terbesar di hasil peta; solusinya operasional (minta ulasan). |
+| T9 | Live site ≠ HEAD git: situs live menampilkan jam "Senin–Sabtu 09.00–17.00" dan ulasan Google asli, sedangkan commit terakhir (`9fd5de6`) masih jam lama. Ada perubahan logo/favicon/testimoni **belum di-commit** di working copy. | **Jangan deploy via `git pull` di server sebelum working copy ini di-commit**, kalau tidak perubahan itu hilang. |
+
+## 3. Yang sudah diubah (lokal, belum commit/deploy)
+
+- `app/layout.tsx`
+  - title → `Jual Laptop Second Pekalongan Bergaransi — FS Comp`
+  - meta description → memuat "laptop second Pekalongan", Wiradesa, QC, tukar tambah, jam buka.
+- `app/LandingPage.tsx`
+  - H1 → `Laptop Second Pekalongan, Bergaransi & Harga Masuk Akal`
+  - paragraf hero memuat "Jual laptop second Pekalongan"
+  - tombol katalog → `Lihat Laptop Second Ready →` (anchor text lebih deskriptif)
+- `npm run build` sukses.
+- Sengaja **tidak** diubah: JSON-LD (sudah memuat alamat, geo, jam buka, sameAs), `aggregateRating` (sudah dihapus di working copy; rating milik sendiri di markup toko tidak memberi rich result), klaim area layanan (butuh konfirmasi owner, lihat audit bagian 10).
+
+## 4. Rencana berikutnya (urut dampak)
+
+**A. Di luar kode — tindakan owner (dampak terbesar untuk pencarian lokal)**
+1. Google Business Profile: ganti telepon ke 0816-660-056; pastikan kategori utama "Toko komputer"/"Toko laptop"; isi jam buka sama dengan website (Senin–Sabtu 09.00–17.00); tambah foto unit & toko; posting stok mingguan; tautkan website `https://fscomp.id`.
+2. Minta ulasan Google dari pembeli (link/QR tulis ulasan).
+3. Google Search Console: verifikasi `fscomp.id` dan `core.fscomp.id`, submit `sitemap.xml` keduanya, pantau kueri & posisi.
+4. Perbaiki `www.fscomp.id` (526) di Cloudflare: pasang redirect `www` → `fscomp.id` dan pastikan sertifikat/SSL mode benar.
+
+**B. Repo `D:\fscomp-core` (deploy ke server toko) — halaman katalog/unit**
+1. Tambah `<link rel="canonical">` di `/katalog`, `/katalog/rakit-pc`, `/unit/<id>` (tanpa `?from=` / `?view=`).
+2. JSON-LD `Product` + `Offer` (harga IDR, ketersediaan, kondisi `UsedCondition`) di halaman unit; `ItemList`/`CollectionPage` di `/katalog`.
+3. Perbaiki pola judul/deskripsi unit: mis. `Jual Dell Latitude 7410 i7 Gen 10 16GB 256GB — Laptop Second Pekalongan`; deskripsi memuat "laptop second Pekalongan", lokasi stok, garansi 3 bulan software / 3 minggu hardware.
+4. Pertimbangkan satukan domain: tampilkan katalog di `fscomp.id/katalog` (proxy/rewrite) dengan canonical ke `fscomp.id`, supaya otoritas terkumpul di satu domain. Ini keputusan arsitektur — butuh persetujuan owner.
+
+**C. Konten (menengah, tidak instan)**
+- Halaman/artikel yang menjawab pencarian nyata: "tips beli laptop second", "laptop second untuk kuliah/kerja", dengan internal link ke katalog. Tulis dari pengalaman toko, bukan teks generik.
+
+## 5. Cara deploy (jika perubahan lokal disetujui)
+
+1. Commit working copy (termasuk logo/testimoni yang sudah live) lalu `git push origin main`.
+2. Ikuti [`DEPLOYMENT.md`](../DEPLOYMENT.md) (build image manual di VPS 1; tidak ada webhook/Coolify).
+3. Setelah live: `curl -s https://fscomp.id | grep -o '<title>[^<]*'` untuk cek, lalu di Search Console minta pengindeksan ulang URL `https://fscomp.id/`.
