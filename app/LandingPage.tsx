@@ -18,7 +18,7 @@ const TICKER_ITEMS = [
 const WA_NUMBER = '62816660056';
 const GMAPS_URL = 'https://share.google/Qfp4ZeCcdg3FFfJZp';
 const IG_URL = 'https://www.instagram.com/fscomp.id/';
-const CATALOG_URL = 'https://core.fscomp.id/katalog#produk-ready';
+const CATALOG_URL = '/katalog#produk-ready';
 
 function waLink(message: string) {
   return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(message)}`;
@@ -40,7 +40,7 @@ function trackWaClick(label: string) {
 const PRODUK = [
   { icon: '💻', title: 'Laptop Second', desc: 'Lihat unit ready beserta foto, spesifikasi, harga, lokasi, dan hasil QC terkini di katalog.', cta: 'Cek unit & harga', href: CATALOG_URL },
   { icon: '🖥️', title: 'Rakit PC Custom', desc: 'Rakit PC sesuai kebutuhan dan anggaran Anda. Konsultasikan spesifikasi dan budget dulu.', cta: 'Konsultasi', href: waLink('Halo FS Comp, saya mau konsultasi rakit PC custom.') },
-  { icon: '🖱️', title: 'Aksesoris', desc: 'Keyboard, mouse, kabel, adaptor, dan perlengkapan komputer lengkap dari brand terpercaya.', cta: 'Lihat Produk', href: 'https://katalog.fscomp.id' },
+  { icon: '🖱️', title: 'Aksesoris', desc: 'Keyboard, mouse, kabel, adaptor, dan perlengkapan komputer lengkap dari brand terpercaya.', cta: 'Lihat Produk', href: '/katalog' },
   { icon: '🔧', title: 'Servis Laptop/PC', desc: 'Install ulang, upgrade SSD/RAM, cleaning, dan pengecekan oleh teknisi berpengalaman.', cta: 'Servis Sekarang', href: waLink('Halo FS Comp, saya mau servis laptop/PC.') },
 ];
 
