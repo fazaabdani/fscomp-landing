@@ -96,3 +96,24 @@ Payoff lebih lambat (butuh bulan, bukan minggu) tapi ini yang membangun keunggul
 - Event kustom **`whatsapp_click`** (GA4) + **`Contact`** (Meta Pixel) dipasang di SEMUA tombol WhatsApp di halaman, dengan label beda per lokasi (`nav`, `hero`, `mobile_menu`, `cta_bottom`, `footer_phone`, `tukar_tambah`, dan nama produk untuk kartu produk) — lihat fungsi `trackWaClick()` di [`app/LandingPage.tsx`](../app/LandingPage.tsx). Ini yang menjawab pertanyaan "CTA mana yang paling sering diklik" dari GA4/Meta Ads Manager nanti.
 - Verifikasi: `window.gtag`/`window.fbq` terkonfirmasi jalan, `dataLayer` terisi config call yang benar, dan event `whatsapp_click` terkonfirmasi terkirim saat tombol WA disimulasikan diklik.
 - **Belum bisa diverifikasi data live masuk ke dashboard GA4/Meta** (butuh traffic asli setelah deploy — GA4 biasanya perlu sampai 48 jam untuk laporan standar muncul, walau Realtime report harusnya langsung kelihatan begitu ada pengunjung asli).
+
+## Link katalog yang dibagikan ke pelanggan: pakai `fscomp.id/katalog` (diuji 2026-10-26)
+
+Hasil uji langsung (`curl`) — keduanya redirect sementara ke halaman yang sama (`core.fscomp.id/katalog`), tapi perilakunya beda:
+
+| Aspek | `fscomp.id/katalog` | `katalog.fscomp.id` |
+|---|---|---|
+| Tujuan akhir | `core.fscomp.id/katalog` (307) | `core.fscomp.id/katalog` (302) |
+| Parameter UTM (`?utm_source=...`) | **Terbawa** ke tujuan | **Hilang** (query dibuang) |
+| Path dalam (`/.../unit/123`) | 404 (aturan cuma cocok persis `/katalog`) | Semua path dilempar ke `/katalog` (lebih toleran) |
+| Dikelola di mana | Repo ini (`next.config.js`), deploy terdokumentasi | Container lama peninggalan Coolify di VPS 1, tanpa control plane |
+| Link preview WhatsApp/IG | Sama (OG diambil dari halaman akhir) | Sama |
+| Halaman akhir punya GA4/Pixel? | **Tidak** (dicek, tidak ada tag di `core.fscomp.id/katalog`) | **Tidak** |
+
+Keputusan: bagikan `fscomp.id/katalog`, dan di materi cetak/sosmed pakai varian bertanda sumber, mis. `fscomp.id/katalog?utm_source=nota`, `?utm_source=ig-bio`, `?utm_source=banner`.
+
+Hal yang masih kurang (belum dikerjakan):
+1. Halaman katalog tujuan **belum dipasangi GA4/Pixel** — paling penting, karena itu halaman ber-niat-beli tertinggi dan sekarang tidak terukur sama sekali (UTM di atas baru berguna kalau tag dipasang di app `fscomp-core`, plus cross-domain tracking GA4 `fscomp.id` ↔ `core.fscomp.id`).
+2. Ubah tombol "Lihat Katalog" di hero & kartu Aksesoris dari `katalog.fscomp.id` ke `/katalog` (hemat satu redirect).
+3. Opsional: perluas aturan jadi `/katalog/:path*` supaya link dalam tidak 404; ganti ke redirect permanen kalau sudah pasti katalog tetap di `core.fscomp.id`.
+4. Jangka panjang: layani katalog benar-benar di bawah `fscomp.id/katalog` (tanpa redirect) — butuh `basePath` di app core, tidak sederhana.
