@@ -52,6 +52,26 @@ Status: **audit selesai; perubahan on-page landing sudah di-commit (`df7eb15`) d
 **C. Konten (menengah, tidak instan)**
 - Halaman/artikel yang menjawab pencarian nyata: "tips beli laptop second", "laptop second untuk kuliah/kerja", dengan internal link ke katalog. Tulis dari pengalaman toko, bukan teks generik.
 
+## 6. Update 2026-10-27 — FS Comp tidak muncul di hasil peta "laptop second pekalongan"
+
+**Temuan.** Screenshot hasil Google "laptop second pekalongan" (dari owner) menunjukkan panel lokal/peta berisi ZIDD.PC, Galeri Computer, MM Komputer, Abadi Berkah Computer, Bursa laptop & komputer, COD Laptop, KLA Computer, Mitra Komputer, MC Computer, IPCOMP — **FS Comp tidak ada**. Peta menampilkan pusat Kota Pekalongan; toko FS Comp di Wiradesa (±7 km di barat) jatuh di luar pusat radius itu. Hasil peta dipengaruhi jarak pencari, relevansi profil, dan prominensi (jumlah/kebaruan ulasan) — bukan hanya website. Pengecekan posisi organik lewat Google tidak bisa dilakukan dari sesi ini (Google menampilkan CAPTCHA); pantau lewat Search Console.
+
+**Fakta dari katalog live `core.fscomp.id/katalog` (27 Okt 2026)** yang belum ada di landing sebelum hari ini: stok juga ada di **Kajen** (27 unit Wiradesa, 2 Kajen), ambil di toko Wiradesa/Kajen, bisa dikirim COD/ekspedisi luar kota, merek Dell/HP/Lenovo, Core i3/i5/i7, RAM 6–16 GB, Windows 10/11, filter harga ≤Rp3 jt / Rp3–5 jt / >Rp5 jt. "Ribuan laptop terjual sejak Agustus 2020".
+
+**Diubah di landing (branch `seo/laptop-second-konten`, `app/LandingPage.tsx`, belum di-commit/deploy):**
+- FAQ 4 → 9 pertanyaan, memuat variasi kata kunci yang dicari orang: lokasi & jam buka (menyebut Kota Pekalongan, Kedungwuni, Kajen, Batang), QC "laptop bekas", merek & spek, kisaran harga, kirim luar kota.
+- **Semua jawaban FAQ kini ada di HTML** (disembunyikan dengan atribut `hidden`, bukan dihapus dari DOM). Sebelumnya jawaban yang tertutup tidak ada di HTML sehingga tidak terbaca crawler — dicek di `.next/server/app/index.html`: 9 jawaban, 8 hidden.
+- H2 memuat kata kunci ("Laptop second bergaransi, rakit PC & servis dalam satu toko", "Dipercaya pembeli laptop second di Pekalongan", "Pertanyaan seputar beli laptop second di FS Comp"); sinonim "laptop bekas" di hero; kartu Laptop Second menyebut merek & spek.
+- `npm run build` sukses.
+- Sengaja tidak dibuat: markup FAQPage (Google sudah membatasi rich result FAQ untuk situs biasa), halaman per-kota (risiko doorway page, area antar belum dikonfirmasi owner).
+- ⚠️ Konfirmasi owner: klaim "stok juga tersedia di Kajen" diambil dari katalog sendiri, alamat Kajen belum ada di mana pun.
+
+**Yang masih terbuka (urut dampak untuk hasil peta/lokal):**
+1. **Google Business Profile** — kategori utama & tambahan (mis. "Toko laptop", "Toko komputer", "Toko barang bekas"), deskripsi memuat "laptop second Pekalongan", telepon 0816-660-056, jam Senin–Sabtu 09.00–17.00, daftar Produk (unit unggulan + harga + foto), posting stok mingguan, area layanan (Kota Pekalongan, Kedungwuni, Kajen, Batang), link website `https://fscomp.id`. Minta ulasan dari tiap pembeli (146 laptop terjual dalam 3 bulan terakhir = potensi ulasan baru yang besar).
+2. **Katalog di `fscomp-core`** (bagian 4B): canonical, JSON-LD Product/Offer, judul unit yang ramah pencarian — di situlah halaman yang bisa muncul untuk pencarian model spesifik.
+3. **`www.fscomp.id` masih HTTP 526** (dicek 27 Okt): pasang Redirect Rule `www.fscomp.id/*` → `https://fscomp.id/$1` (301) di Cloudflare.
+4. Search Console: verifikasi `fscomp.id` + `core.fscomp.id`, submit sitemap, minta indeks ulang `https://fscomp.id/` setelah deploy.
+
 ## 5. Cara deploy (jika perubahan lokal disetujui)
 
 1. Commit working copy (termasuk logo/testimoni yang sudah live) lalu `git push origin main`.

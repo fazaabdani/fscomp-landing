@@ -38,7 +38,7 @@ function trackWaClick(label: string) {
 }
 
 const PRODUK = [
-  { icon: '💻', title: 'Laptop Second', desc: 'Lihat unit ready beserta foto, spesifikasi, harga, lokasi, dan hasil QC terkini di katalog.', cta: 'Cek unit & harga', href: CATALOG_URL },
+  { icon: '💻', title: 'Laptop Second', desc: 'Laptop second Dell, HP, Lenovo dan lainnya — Core i3/i5/i7, SSD, Windows 10/11. Lihat unit ready beserta foto, spesifikasi, harga, lokasi, dan hasil QC terkini di katalog.', cta: 'Cek unit & harga', href: CATALOG_URL },
   { icon: '🖥️', title: 'Rakit PC Custom', desc: 'Rakit PC sesuai kebutuhan dan anggaran Anda. Konsultasikan spesifikasi dan budget dulu.', cta: 'Konsultasi', href: waLink('Halo FS Comp, saya mau konsultasi rakit PC custom.') },
   { icon: '🖱️', title: 'Aksesoris', desc: 'Keyboard, mouse, kabel, adaptor, dan perlengkapan komputer lengkap dari brand terpercaya.', cta: 'Lihat Produk', href: '/katalog' },
   { icon: '🔧', title: 'Servis Laptop/PC', desc: 'Install ulang, upgrade SSD/RAM, cleaning, dan pengecekan oleh teknisi berpengalaman.', cta: 'Servis Sekarang', href: waLink('Halo FS Comp, saya mau servis laptop/PC.') },
@@ -78,16 +78,36 @@ const TUKAR_TAMBAH_STEPS = [
 
 const FAQ_ITEMS = [
   {
+    q: 'Di mana toko laptop second FS Comp dan jam bukanya?',
+    a: 'FS Comp ada di Jalan Raya Wiradesa No.1, Ds. Wiradesa, Kec. Wiradesa, Kabupaten Pekalongan, buka Senin–Sabtu 09.00–17.00 (Minggu tutup). Sebagian unit juga tersedia di Kajen — lokasi stok tiap unit tertera di katalog. Pembeli dari Kota Pekalongan, Kedungwuni, Kajen, Batang, dan sekitarnya bisa datang langsung ke toko.',
+  },
+  {
     q: 'Berapa lama garansi laptop second di FS Comp?',
     a: 'Garansi mencakup software 3 bulan dan hardware 3 minggu sejak tanggal pembelian.',
   },
   {
-    q: 'Apakah FS Comp menerima tukar tambah laptop lama?',
-    a: 'Ya, FS Comp menerima tukar tambah/beli laptop bekas — khusus untuk unit yang kondisinya benar-benar normal dan lolos QC FS Comp. Chat admin dulu untuk cek kondisi dan estimasi harga.',
+    q: 'Apakah laptop second (laptop bekas) FS Comp dicek dulu sebelum dijual?',
+    a: 'Ya. Setiap unit melewati 10 poin QC — fisik & engsel, layar, keyboard, touchpad, baterai, SSD/RAM, port USB, charger, WiFi, dan performa — sebelum masuk katalog, lalu dijual dengan garansi toko.',
+  },
+  {
+    q: 'Laptop second merek dan spek apa saja yang tersedia?',
+    a: 'Stok berganti sesuai unit yang masuk. Merek yang umum tersedia: Dell, HP, dan Lenovo, dengan pilihan prosesor Core i3, i5, dan i7, RAM 6–16 GB, SSD, serta Windows 10 atau 11. Lihat unit yang ready beserta foto dan harganya di katalog.',
+  },
+  {
+    q: 'Berapa harga laptop second di FS Comp?',
+    a: 'Harga bervariasi menurut merek dan spesifikasi. Di katalog Anda bisa memfilter unit sampai Rp3 juta, Rp3–5 juta, atau di atas Rp5 juta. Harga tiap unit tertera jelas; chat admin untuk cek ketersediaan.',
   },
   {
     q: 'Metode pembayaran apa saja yang tersedia?',
     a: 'Pembayaran cash atau transfer bank. Saat ini FS Comp belum menyediakan opsi cicilan/kredit.',
+  },
+  {
+    q: 'Apakah laptop bisa dikirim ke luar kota?',
+    a: 'Bisa. Selain ambil di toko (Wiradesa atau Kajen), unit bisa dikirim lewat COD atau ekspedisi ke luar kota. Ongkir tanyakan ke admin.',
+  },
+  {
+    q: 'Apakah FS Comp menerima tukar tambah laptop lama?',
+    a: 'Ya, FS Comp menerima tukar tambah/beli laptop bekas — khusus untuk unit yang kondisinya benar-benar normal dan lolos QC FS Comp. Chat admin dulu untuk cek kondisi dan estimasi harga.',
   },
   {
     q: 'Bagaimana cara membeli laptop di FS Comp?',
@@ -302,7 +322,7 @@ export default function LandingPage() {
           <span className={s.line2}>Bergaransi &amp; <span className={s.grad}>Harga Masuk Akal</span></span>
         </h1>
         <p className={s.heroSub}>
-          Jual laptop second Pekalongan yang sudah lolos QC: lihat unit ready lengkap dengan foto, spesifikasi, harga, dan lokasi stok di katalog FS Comp. Tersedia juga rakit PC custom, aksesoris, dan servis profesional.
+          Jual laptop second (laptop bekas) Pekalongan yang sudah lolos QC: lihat unit ready lengkap dengan foto, spesifikasi, harga, dan lokasi stok di katalog FS Comp. Tersedia juga rakit PC custom, aksesoris, dan servis profesional.
         </p>
         <div className={s.heroCta}>
           <a className={s.btnPrimary} href={WA} onClick={() => trackWaClick('hero')}>💬 Konsultasi Sekarang</a>
@@ -336,7 +356,7 @@ export default function LandingPage() {
       <section className={`${s.produk} ${s.section} ${s.reveal}`} id="produk">
         <div className={s.produkHead}>
           <div className={s.sectionLabel}>Produk &amp; Layanan</div>
-          <h2 className={s.sectionTitle}>Solusi komputer lengkap<br />untuk semua kebutuhan</h2>
+          <h2 className={s.sectionTitle}>Laptop second bergaransi,<br />rakit PC &amp; servis dalam satu toko</h2>
           <p className={s.sectionSub}>Dari laptop second bergaransi sampai rakit PC custom — semua ada di FS Comp.</p>
         </div>
         <div className={s.produkGrid}>
@@ -429,7 +449,7 @@ export default function LandingPage() {
       <section className={`${s.testiSection} ${s.reveal}`} id="testi">
         <div className={s.testiHead}>
           <div className={s.sectionLabel}>Ulasan Pelanggan</div>
-          <h2 className={s.sectionTitle}>Dipercaya pelanggan</h2>
+          <h2 className={s.sectionTitle}>Dipercaya pembeli laptop second di Pekalongan</h2>
           <p className={s.sectionSub}>Kutipan ulasan Google yang dapat dibuka dan diverifikasi langsung.</p>
         </div>
         <div className={s.testiGrid}>
@@ -449,7 +469,7 @@ export default function LandingPage() {
       <section className={`${s.faqSection} ${s.reveal}`} id="faq">
         <div className={s.testiHead}>
           <div className={s.sectionLabel}>FAQ</div>
-          <h2 className={s.sectionTitle}>Pertanyaan yang sering ditanyakan</h2>
+          <h2 className={s.sectionTitle}>Pertanyaan seputar beli laptop second di FS Comp</h2>
         </div>
         <div className={s.faqList}>
           {FAQ_ITEMS.map((item, i) => {
@@ -460,12 +480,14 @@ export default function LandingPage() {
                   type="button"
                   className={s.faqQuestion}
                   aria-expanded={isOpen}
+                  aria-controls={`faq-answer-${i}`}
                   onClick={() => setOpenFaq(isOpen ? null : i)}
                 >
                   {item.q}
                   <span className={s.faqIcon} aria-hidden="true">{isOpen ? '−' : '+'}</span>
                 </button>
-                {isOpen && <p className={s.faqAnswer}>{item.a}</p>}
+                {/* Semua jawaban tetap ada di HTML (hanya disembunyikan) supaya terbaca crawler Google */}
+                <p id={`faq-answer-${i}`} className={s.faqAnswer} hidden={!isOpen}>{item.a}</p>
               </div>
             );
           })}
